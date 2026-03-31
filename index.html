@@ -223,6 +223,45 @@
             border-radius: 14px;
             margin-top: 1rem;
         }
+        .profile-form-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.6rem;
+            margin-top: 0.75rem;
+        }
+        .profile-history-list {
+            display: grid;
+            gap: 0.55rem;
+            margin-top: 0.75rem;
+        }
+        .profile-history-item {
+            border: 1px solid #e2e8f0;
+            background: #fff;
+            border-radius: 14px;
+            padding: 0.7rem 0.85rem;
+        }
+        .profile-history-time {
+            color: #64748b;
+            font-size: 0.75rem;
+            margin-top: 0.2rem;
+        }
+        .profile-status {
+            min-height: 20px;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .profile-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            border-radius: 999px;
+            padding: 0.3rem 0.7rem;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
         .mobile-nav-toggle {
             display: none;
         }
@@ -271,6 +310,9 @@
             .quiz-question {
                 padding: 1rem 0.9rem;
             }
+            .profile-form-row {
+                grid-template-columns: 1fr;
+            }
             .timeline-strip {
                 grid-template-columns: 1fr;
                 gap: 0.5rem;
@@ -318,6 +360,26 @@
             <!-- Sidebar for Navigation -->
             <aside class="w-full md:w-1/4 bg-white p-4 md:p-6 rounded-2xl shadow-md self-start no-print md:sticky md:top-6">
                 <h2 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">បញ្ជីមេរៀន</h2>
+                <div id="profile-sidebar" class="progress-card mb-4 bg-amber-50 border-amber-100">
+                    <div class="flex items-center justify-between gap-3">
+                        <h4 class="text-amber-800">អ្នកប្រើប្រាស់</h4>
+                        <span class="profile-chip">មិនបាច់ login</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mt-2">អ្នកប្រើបច្ចុប្បន្ន: <strong id="current-profile-name">អ្នកប្រើ 1</strong></p>
+                    <label for="profile-select" class="block text-sm text-slate-700 mt-3 font-semibold">ជ្រើសអ្នកប្រើ</label>
+                    <select id="profile-select" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 bg-white"></select>
+                    <div class="profile-form-row">
+                        <input id="profile-name-input" type="text" class="w-full rounded-lg border border-slate-300 px-3 py-2 bg-white" placeholder="បញ្ចូលឈ្មោះអ្នកប្រើថ្មី">
+                        <button id="create-profile-btn" type="button" class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600">បង្កើត</button>
+                    </div>
+                    <div id="profile-status" class="profile-status text-slate-600"></div>
+                    <div class="mt-3">
+                        <h4 class="text-amber-800">ប្រវត្តិថ្មីៗ</h4>
+                        <div id="profile-history-list" class="profile-history-list">
+                            <div class="profile-history-item text-slate-500">មិនទាន់មានប្រវត្តិទេ។</div>
+                        </div>
+                    </div>
+                </div>
                 <button id="mobile-nav-toggle" class="mobile-nav-toggle no-print" type="button" aria-expanded="false" aria-controls="mobile-nav-panel">
                     <span>បើកមឺនុយមេរៀន</span>
                     <span id="mobile-nav-icon">+</span>
@@ -1998,12 +2060,20 @@
             const progressText = document.getElementById('progress-text');
             const progressAverage = document.getElementById('progress-average');
             const levelHint = document.getElementById('level-hint');
+            const currentProfileName = document.getElementById('current-profile-name');
+            const profileSelect = document.getElementById('profile-select');
+            const profileNameInput = document.getElementById('profile-name-input');
+            const createProfileBtn = document.getElementById('create-profile-btn');
+            const profileStatus = document.getElementById('profile-status');
+            const profileHistoryList = document.getElementById('profile-history-list');
             const mobileNavToggle = document.getElementById('mobile-nav-toggle');
             const mobileNavPanel = document.getElementById('mobile-nav-panel');
             const mobileNavIcon = document.getElementById('mobile-nav-icon');
             const finalTestStatus = document.getElementById('final-test-status');
             const finalLevelTestsContainer = document.getElementById('final-level-tests');
             const progressStorageKey = 'tenses-progress-v1';
+            const profilesStorageKey = 'tenses-user-profiles-v1';
+            const currentProfileStorageKey = 'tenses-current-profile-v1';
             const PASS_THRESHOLD = 70;
             
             const verbList = [
@@ -2758,25 +2828,245 @@
                 return array;
             }
 
-            function loadProgress() {
+            function createEmptyProgressState() {
+                return {
+                    quizScores: {},
+                    levelTestScores: {},
+                    practiceChecks: {},
+                    practiceScores: {},
+                    visitedLessons: []
+                };
+            }
+
+            function sanitizeProgressState(saved) {
+                return {
+                    quizScores: saved?.quizScores || {},
+                    levelTestScores: saved?.levelTestScores || {},
+                    practiceChecks: saved?.practiceChecks || {},
+                    practiceScores: saved?.practiceScores || {},
+                    visitedLessons: Array.isArray(saved?.visitedLessons) ? saved.visitedLessons : []
+                };
+            }
+
+            function cloneProgressState(state) {
+                return JSON.parse(JSON.stringify(sanitizeProgressState(state)));
+            }
+
+            function createProfileRecord(name, progress) {
+                const timestamp = new Date().toISOString();
+                return {
+                    id: `profile-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+                    name,
+                    createdAt: timestamp,
+                    lastActiveAt: timestamp,
+                    progress: cloneProgressState(progress || createEmptyProgressState()),
+                    activityLog: []
+                };
+            }
+
+            function getLegacyProgressState() {
                 try {
-                    const saved = JSON.parse(localStorage.getItem(progressStorageKey) || '{}');
-                    return {
-                        quizScores: saved.quizScores || {},
-                        levelTestScores: saved.levelTestScores || {},
-                        practiceChecks: saved.practiceChecks || {},
-                        practiceScores: saved.practiceScores || {},
-                        visitedLessons: saved.visitedLessons || []
-                    };
+                    return sanitizeProgressState(JSON.parse(localStorage.getItem(progressStorageKey) || '{}'));
                 } catch (error) {
-                    return { quizScores: {}, levelTestScores: {}, practiceChecks: {}, practiceScores: {}, visitedLessons: [] };
+                    return createEmptyProgressState();
                 }
             }
 
-            let progressState = loadProgress();
+            function loadProfileStore() {
+                try {
+                    const saved = JSON.parse(localStorage.getItem(profilesStorageKey) || '{}');
+                    const profiles = Array.isArray(saved.profiles)
+                        ? saved.profiles.map(profile => ({
+                            ...profile,
+                            progress: sanitizeProgressState(profile.progress),
+                            activityLog: Array.isArray(profile.activityLog) ? profile.activityLog : []
+                        }))
+                        : [];
+                    const currentProfileId = saved.currentProfileId || localStorage.getItem(currentProfileStorageKey);
+
+                    if (profiles.length) {
+                        return { profiles, currentProfileId: currentProfileId || profiles[0].id };
+                    }
+                } catch (error) {
+                }
+
+                const fallbackProfile = createProfileRecord('អ្នកប្រើ 1', getLegacyProgressState());
+                if (
+                    Object.keys(fallbackProfile.progress.quizScores).length ||
+                    Object.keys(fallbackProfile.progress.practiceScores).length ||
+                    Object.keys(fallbackProfile.progress.levelTestScores).length
+                ) {
+                    fallbackProfile.activityLog.unshift({
+                        text: 'បាននាំចូលទិន្នន័យចាស់ចូលទៅក្នុង profile ថ្មី',
+                        at: new Date().toISOString()
+                    });
+                }
+
+                return {
+                    profiles: [fallbackProfile],
+                    currentProfileId: fallbackProfile.id
+                };
+            }
+
+            let profileStore = loadProfileStore();
+
+            function getCurrentProfile() {
+                let profile = profileStore.profiles.find(item => item.id === profileStore.currentProfileId);
+                if (!profile && profileStore.profiles.length) {
+                    profile = profileStore.profiles[0];
+                    profileStore.currentProfileId = profile.id;
+                }
+                return profile;
+            }
+
+            function saveProfileStore() {
+                localStorage.setItem(profilesStorageKey, JSON.stringify(profileStore));
+                localStorage.setItem(currentProfileStorageKey, profileStore.currentProfileId || '');
+            }
+
+            let progressState = cloneProgressState(getCurrentProfile()?.progress || createEmptyProgressState());
+
+            function syncProgressToCurrentProfile() {
+                const profile = getCurrentProfile();
+                if (!profile) return;
+                profile.progress = cloneProgressState(progressState);
+                profile.lastActiveAt = new Date().toISOString();
+                localStorage.setItem(progressStorageKey, JSON.stringify(profile.progress));
+                saveProfileStore();
+            }
 
             function saveProgress() {
-                localStorage.setItem(progressStorageKey, JSON.stringify(progressState));
+                syncProgressToCurrentProfile();
+            }
+
+            function formatHistoryTime(timestamp) {
+                try {
+                    return new Date(timestamp).toLocaleString('en-GB', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                } catch (error) {
+                    return timestamp;
+                }
+            }
+
+            function renderProfileHistory() {
+                if (!profileHistoryList) return;
+                const profile = getCurrentProfile();
+                const logs = profile?.activityLog || [];
+                if (!logs.length) {
+                    profileHistoryList.innerHTML = '<div class="profile-history-item text-slate-500">មិនទាន់មានប្រវត្តិទេ។</div>';
+                    return;
+                }
+
+                profileHistoryList.innerHTML = logs.slice(0, 6).map(log => `
+                    <div class="profile-history-item">
+                        <div class="text-slate-700">${log.text}</div>
+                        <div class="profile-history-time">${formatHistoryTime(log.at)}</div>
+                    </div>
+                `).join('');
+            }
+
+            function renderProfileOptions() {
+                if (!profileSelect) return;
+                profileSelect.innerHTML = profileStore.profiles.map(profile => `
+                    <option value="${profile.id}" ${profile.id === profileStore.currentProfileId ? 'selected' : ''}>${profile.name}</option>
+                `).join('');
+
+                const profile = getCurrentProfile();
+                if (currentProfileName && profile) {
+                    currentProfileName.textContent = profile.name;
+                }
+                renderProfileHistory();
+            }
+
+            function setProfileStatus(message, color = '#475569') {
+                if (!profileStatus) return;
+                profileStatus.textContent = message;
+                profileStatus.style.color = color;
+            }
+
+            function logProfileActivity(text) {
+                const profile = getCurrentProfile();
+                if (!profile) return;
+                profile.activityLog = Array.isArray(profile.activityLog) ? profile.activityLog : [];
+                profile.activityLog.unshift({
+                    text,
+                    at: new Date().toISOString()
+                });
+                profile.activityLog = profile.activityLog.slice(0, 20);
+                syncProgressToCurrentProfile();
+                renderProfileHistory();
+            }
+
+            function getUniqueProfileName(baseName) {
+                const existingNames = profileStore.profiles.map(profile => profile.name.toLowerCase());
+                if (!existingNames.includes(baseName.toLowerCase())) return baseName;
+                let counter = 2;
+                while (existingNames.includes(`${baseName} ${counter}`.toLowerCase())) {
+                    counter += 1;
+                }
+                return `${baseName} ${counter}`;
+            }
+
+            function getLessonDisplayName(lessonId) {
+                const link = document.querySelector(`#lesson-nav a[data-lesson="${lessonId}"]`);
+                if (link) {
+                    return (link.dataset.baseLabel || link.textContent || lessonId).replace(' (Locked)', '').trim();
+                }
+                const lessonContainer = document.getElementById(`${lessonId}-content`);
+                const heading = lessonContainer?.querySelector('h2');
+                if (heading) {
+                    return heading.textContent.trim();
+                }
+                return lessonId;
+            }
+
+            function switchProfile(profileId) {
+                const profile = profileStore.profiles.find(item => item.id === profileId);
+                if (!profile) return;
+                profileStore.currentProfileId = profile.id;
+                progressState = cloneProgressState(profile.progress);
+                saveProfileStore();
+                renderProfileOptions();
+                updateProgressUI();
+                renderFinalTest();
+                bindLevelTestControls();
+                showLesson('welcome');
+                setProfileStatus(`បានប្តូរទៅអ្នកប្រើ ${profile.name}`, '#2563eb');
+            }
+
+            function createNewProfile() {
+                const rawName = profileNameInput?.value.trim();
+                if (!rawName) {
+                    setProfileStatus('សូមបញ្ចូលឈ្មោះអ្នកប្រើជាមុនសិន។', '#dc2626');
+                    return;
+                }
+
+                const profileName = getUniqueProfileName(rawName);
+                const profile = createProfileRecord(profileName, createEmptyProgressState());
+                profile.activityLog.unshift({
+                    text: 'បានបង្កើត profile ថ្មី',
+                    at: new Date().toISOString()
+                });
+
+                profileStore.profiles.push(profile);
+                profileStore.currentProfileId = profile.id;
+                progressState = cloneProgressState(profile.progress);
+                saveProfileStore();
+                renderProfileOptions();
+                updateProgressUI();
+                renderFinalTest();
+                bindLevelTestControls();
+                showLesson('welcome');
+
+                if (profileNameInput) {
+                    profileNameInput.value = '';
+                }
+                setProfileStatus(`បានបង្កើតអ្នកប្រើ ${profileName}`, '#15803d');
             }
 
             function updateProgressUI() {
@@ -2797,6 +3087,20 @@
                     levelHint.textContent = `ត្រូវបាន ${PASS_THRESHOLD}% ឡើងទៅ ក្នុង lesson quiz ទាំងអស់របស់ Level មុន សិន ទើបបើក Level បន្ទាប់។`;
                 }
                 updateNavigationLocks();
+                updateFinalTestStatusText();
+            }
+
+            function updateFinalTestStatusText() {
+                if (!finalTestStatus) return;
+                const attemptedLevels = levelConfig.filter(level => progressState.levelTestScores[`level-${level.id}`] !== undefined);
+                if (!attemptedLevels.length) {
+                    finalTestStatus.textContent = 'សូមចាប់ផ្តើមពី Level 1 មុនសិន។';
+                    return;
+                }
+
+                const latestLevel = attemptedLevels[attemptedLevels.length - 1];
+                const latestScore = progressState.levelTestScores[`level-${latestLevel.id}`];
+                finalTestStatus.textContent = `លទ្ធផលចុងក្រោយរបស់អ្នកប្រើនេះ: ${latestLevel.name} = ${latestScore}%`;
             }
 
             function isLevelPassed(levelId) {
@@ -2833,6 +3137,7 @@
                 if (!progressState.visitedLessons.includes(lessonId)) {
                     progressState.visitedLessons.push(lessonId);
                     saveProgress();
+                    logProfileActivity(`បានចូលមើលមេរៀន ${getLessonDisplayName(lessonId)}`);
                 }
             }
 
@@ -2959,6 +3264,7 @@
                         progressState.practiceScores[lessonId] = score;
                         saveProgress();
                         updateProgressUI();
+                        logProfileActivity(`បានអនុវត្ត ${getLessonDisplayName(lessonId)} បាន ${score}%`);
                     });
                 });
             }
@@ -3114,6 +3420,7 @@
                         const result = card.querySelector('.quiz-result');
                         result.textContent = `អ្នកទទួលបាន ${score}/${questions.length} ពិន្ទុ (${percentage}%)`;
                         result.style.color = percentage >= PASS_THRESHOLD ? 'green' : 'red';
+                        logProfileActivity(`បានធ្វើ ${levelConfig.find(level => level.id === levelId).name} បាន ${percentage}%`);
 
                         if (percentage >= PASS_THRESHOLD) {
                             const nextLevel = levelConfig.find(level => level.id === levelId + 1);
@@ -3287,6 +3594,10 @@
                 resultContainer.style.color = (score === quizQuestions.length) ? 'green' : 'red';
 
                 const percentage = Math.round((score / quizQuestions.length) * 100);
+                if (lessonId) {
+                    logProfileActivity(`បានធ្វើ quiz ${getLessonDisplayName(lessonId)} បាន ${percentage}%`);
+                }
+
                 if (lessonId && lessonLevelMap[lessonId]) {
                     progressState.quizScores[lessonId] = percentage;
                     saveProgress();
@@ -3381,8 +3692,29 @@
                     printable.classList.remove('printable-area');
                 }
             };
+
+            if (profileSelect) {
+                profileSelect.addEventListener('change', function() {
+                    switchProfile(this.value);
+                });
+            }
+
+            if (createProfileBtn) {
+                createProfileBtn.addEventListener('click', createNewProfile);
+            }
+
+            if (profileNameInput) {
+                profileNameInput.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        createNewProfile();
+                    }
+                });
+            }
             
             // Initial setup
+            saveProfileStore();
+            renderProfileOptions();
             populateVerbTable();
             renderLessonEnhancements();
             renderFinalTest();
