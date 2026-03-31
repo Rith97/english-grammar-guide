@@ -262,6 +262,103 @@
             font-size: 0.8rem;
             font-weight: 700;
         }
+        .tool-btn-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.55rem;
+            margin-top: 0.75rem;
+        }
+        .tool-btn {
+            border-radius: 12px;
+            padding: 0.65rem 0.75rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            color: #334155;
+        }
+        .tool-btn.warn {
+            border-color: #fdba74;
+            background: #fff7ed;
+            color: #c2410c;
+        }
+        .tool-btn.primary {
+            border-color: #93c5fd;
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+        .lesson-search {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 0.75rem 0.9rem;
+            background: #fff;
+            color: #0f172a;
+            margin-bottom: 0.9rem;
+        }
+        .review-list,
+        .badge-list {
+            display: grid;
+            gap: 0.55rem;
+            margin-top: 0.75rem;
+        }
+        .review-item,
+        .badge-item {
+            border: 1px solid #dbeafe;
+            background: #fff;
+            border-radius: 14px;
+            padding: 0.75rem 0.85rem;
+        }
+        .review-item button,
+        .badge-action-btn {
+            margin-top: 0.55rem;
+            border-radius: 10px;
+            padding: 0.45rem 0.7rem;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .certificate-panel {
+            border: 1px solid #fde68a;
+            background: linear-gradient(180deg, #fffbeb, #fffef8);
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 18px 35px rgba(146, 64, 14, 0.08);
+        }
+        .certificate-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 132px;
+            border-radius: 999px;
+            padding: 0.55rem 1rem;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+        .daily-practice-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+        }
+        .daily-practice-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border-radius: 999px;
+            background: #ecfeff;
+            color: #0f766e;
+            border: 1px solid #a5f3fc;
+            padding: 0.35rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
         .mobile-nav-toggle {
             display: none;
         }
@@ -288,6 +385,9 @@
                 padding: 0.2rem 0.55rem;
                 font-size: 0.72rem;
             }
+            .tool-btn-row {
+                grid-template-columns: 1fr;
+            }
             #profile-sidebar label,
             #profile-sidebar p,
             #profile-sidebar .profile-status {
@@ -310,6 +410,16 @@
             }
             .profile-history-time {
                 font-size: 0.7rem;
+            }
+            .lesson-search {
+                padding: 0.7rem 0.8rem;
+                font-size: 0.92rem;
+            }
+            .review-item,
+            .badge-item,
+            .certificate-panel {
+                padding: 0.85rem;
+                border-radius: 16px;
             }
             .mobile-nav-toggle {
                 display: flex;
@@ -408,6 +518,12 @@
                         <button id="create-profile-btn" type="button" class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600">បង្កើត</button>
                     </div>
                     <div id="profile-status" class="profile-status text-slate-600"></div>
+                    <div class="tool-btn-row">
+                        <button id="export-backup-btn" type="button" class="tool-btn primary">Export Backup</button>
+                        <button id="import-backup-btn" type="button" class="tool-btn">Import Backup</button>
+                        <button id="reset-profile-btn" type="button" class="tool-btn warn">Reset User</button>
+                    </div>
+                    <input id="import-backup-input" type="file" accept="application/json" class="hidden">
                     <div class="mt-3">
                         <h4 class="text-amber-800">ប្រវត្តិថ្មីៗ</h4>
                         <div id="profile-history-list" class="profile-history-list">
@@ -427,6 +543,20 @@
                         <p id="progress-average" class="text-sm text-slate-600 mt-1">មធ្យមពិន្ទុ: 0%</p>
                         <p id="level-hint" class="text-sm text-slate-600 mt-2">ត្រូវបាន 70% ឡើងទៅ ដើម្បីបើក Level បន្ទាប់។</p>
                     </div>
+                    <div id="weak-topics-sidebar" class="progress-card mb-4 bg-rose-50 border-rose-100">
+                        <h4 class="text-rose-700">Weak-Topic Review</h4>
+                        <div id="weak-topics-list" class="review-list">
+                            <div class="review-item text-slate-500">មិនទាន់មានទិន្នន័យសម្រាប់វាយតម្លៃទេ។</div>
+                        </div>
+                    </div>
+                    <div id="badge-sidebar" class="progress-card mb-4 bg-violet-50 border-violet-100">
+                        <h4 class="text-violet-700">Badges & Certificate</h4>
+                        <div id="badge-list" class="badge-list">
+                            <div class="badge-item text-slate-500">ធ្វើតេស្តបន្ថែម ដើម្បីទទួល badge។</div>
+                        </div>
+                        <button id="open-certificate-btn" type="button" class="badge-action-btn w-full">មើល Certificate</button>
+                    </div>
+                    <input id="lesson-search-input" type="text" class="lesson-search" placeholder="ស្វែងរកមេរៀន...">
                     <nav id="lesson-nav" class="space-y-2">
                     <!-- Present Tenses -->
                     <div>
@@ -480,6 +610,8 @@
                             <li><a href="#" class="lesson-link block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md" data-lesson="essay-writing">Essay Writing</a></li>
                         </ul>
                     </div>
+                        <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="daily-practice">Daily Practice</a>
+                        <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="certificate">Certificate</a>
                      <!-- Common Verbs Link -->
                         <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="common-verbs">បញ្ជីកិរិយាសព្ទ</a>
                         <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="final-test">Final Test</a>
@@ -2067,6 +2199,51 @@
                     </div>
                 </div>
 
+                <div id="daily-practice-content" class="lesson-content space-y-6">
+                    <button class="print-btn float-right p-2 rounded-md bg-gray-200 hover:bg-gray-300 no-print">🖨️ បោះពុម្ពមេរៀននេះ</button>
+                    <div class="daily-practice-header">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">📅 Daily Practice</h2>
+                            <p class="text-slate-600 mt-2">លំហាត់ប្រចាំថ្ងៃ 8 សំណួរ ដែលបង្កើតឡើងសម្រាប់ថ្ងៃនេះ ដើម្បីឱ្យហាត់បានលឿន និងទៀងទាត់។</p>
+                        </div>
+                        <span id="daily-practice-pill" class="daily-practice-pill">ថ្ងៃនេះមិនទាន់ធ្វើ</span>
+                    </div>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <h4>Daily Goal</h4>
+                            <p>ធ្វើឱ្យបានយ៉ាងហោចណាស់ 1 ដងក្នុងមួយថ្ងៃ ហើយព្យាយាមឱ្យបាន 70% ឡើងទៅ។</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>What You Practice</h4>
+                            <p>Tenses, Parts of Speech និង Writing Skills ត្រូវបានលាយបញ្ចូលគ្នា ដើម្បីឱ្យរំលឹកចំណេះដឹងចាស់ៗ។</p>
+                        </div>
+                    </div>
+                    <div id="daily-practice-container" class="space-y-4"></div>
+                </div>
+
+                <div id="certificate-content" class="lesson-content space-y-6">
+                    <button class="print-btn float-right p-2 rounded-md bg-gray-200 hover:bg-gray-300 no-print">🖨️ បោះពុម្ព Certificate</button>
+                    <h2 class="text-2xl font-bold text-gray-800">🏅 Certificate & Badges</h2>
+                    <div id="certificate-panel" class="certificate-panel space-y-5">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                            <div>
+                                <p class="text-sm uppercase tracking-[0.2em] text-amber-700">Achievement</p>
+                                <h3 class="!border-0 !pb-0 !mb-0 text-amber-900">Certificate of Progress</h3>
+                            </div>
+                            <span id="certificate-badge" class="certificate-badge">In Progress</span>
+                        </div>
+                        <div id="certificate-summary" class="space-y-3 text-slate-700">
+                            <p>សូមបន្តធ្វើមេរៀន និង Final Test ដើម្បីទទួល certificate ពេញលេញ។</p>
+                        </div>
+                        <div>
+                            <h4 class="text-amber-800">Badges Earned</h4>
+                            <div id="certificate-badge-list" class="badge-list">
+                                <div class="badge-item text-slate-500">មិនទាន់មាន badge ទេ។</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="final-test-content" class="lesson-content space-y-6">
                     <button class="print-btn float-right p-2 rounded-md bg-gray-200 hover:bg-gray-300 no-print">🖨️ បោះពុម្ពតេស្តនេះ</button>
                     <h2 class="text-2xl font-bold text-gray-800">🏁 Final Test</h2>
@@ -2101,6 +2278,19 @@
             const createProfileBtn = document.getElementById('create-profile-btn');
             const profileStatus = document.getElementById('profile-status');
             const profileHistoryList = document.getElementById('profile-history-list');
+            const exportBackupBtn = document.getElementById('export-backup-btn');
+            const importBackupBtn = document.getElementById('import-backup-btn');
+            const importBackupInput = document.getElementById('import-backup-input');
+            const resetProfileBtn = document.getElementById('reset-profile-btn');
+            const lessonSearchInput = document.getElementById('lesson-search-input');
+            const weakTopicsList = document.getElementById('weak-topics-list');
+            const badgeList = document.getElementById('badge-list');
+            const openCertificateBtn = document.getElementById('open-certificate-btn');
+            const dailyPracticeContainer = document.getElementById('daily-practice-container');
+            const dailyPracticePill = document.getElementById('daily-practice-pill');
+            const certificateSummary = document.getElementById('certificate-summary');
+            const certificateBadge = document.getElementById('certificate-badge');
+            const certificateBadgeList = document.getElementById('certificate-badge-list');
             const mobileNavToggle = document.getElementById('mobile-nav-toggle');
             const mobileNavPanel = document.getElementById('mobile-nav-panel');
             const mobileNavIcon = document.getElementById('mobile-nav-icon');
@@ -2850,6 +3040,15 @@
                 ]
             };
 
+            const dailyPracticeExtras = [
+                { prompt: "Which word is a noun?", correct: "b", lessonId: "noun", explanation: "teacher ជាមនុស្ស ឬអ្វីមួយ ដូច្នេះវាជា noun។", options: [{ value: "a", label: "quickly" }, { value: "b", label: "teacher" }, { value: "c", label: "under" }] },
+                { prompt: "Which sentence uses an adjective correctly?", correct: "a", lessonId: "adjective", explanation: "beautiful នៅទីនេះពិពណ៌នា flower ដូច្នេះត្រឹមត្រូវ។", options: [{ value: "a", label: "She bought a beautiful flower." }, { value: "b", label: "She sings beautiful." }, { value: "c", label: "He runs beauty." }] },
+                { prompt: "Choose the best topic sentence for a paragraph.", correct: "c", lessonId: "paragraph-writing", explanation: "Topic sentence ត្រូវបង្ហាញគំនិតចម្បងច្បាស់។", options: [{ value: "a", label: "Also, I study with my friends." }, { value: "b", label: "For these reasons, I like school." }, { value: "c", label: "My school library is a useful place for students." }] },
+                { prompt: "Which part of an essay restates the main idea?", correct: "a", lessonId: "essay-writing", explanation: "Conclusion ត្រូវសរុប និង restate main idea។", options: [{ value: "a", label: "Conclusion" }, { value: "b", label: "Title" }, { value: "c", label: "Example sentence" }] },
+                { prompt: "Which word is a conjunction?", correct: "b", lessonId: "conjunction", explanation: "because ជា conjunction ដែលភ្ជាប់គំនិត និងបង្ហាញមូលហេតុ។", options: [{ value: "a", label: "wow" }, { value: "b", label: "because" }, { value: "c", label: "under" }] },
+                { prompt: "Which word is an adverb?", correct: "c", lessonId: "adverb", explanation: "carefully ពិពណ៌នារបៀបធ្វើសកម្មភាព ដូច្នេះវាជា adverb។", options: [{ value: "a", label: "happy" }, { value: "b", label: "table" }, { value: "c", label: "carefully" }] }
+            ];
+
             function normalizeAnswer(text) {
                 return text.toLowerCase().replace(/\s+/g, ' ').trim().replace(/[.?!]$/, '');
             }
@@ -2869,7 +3068,8 @@
                     levelTestScores: {},
                     practiceChecks: {},
                     practiceScores: {},
-                    visitedLessons: []
+                    visitedLessons: [],
+                    dailyPracticeScores: {}
                 };
             }
 
@@ -2879,7 +3079,8 @@
                     levelTestScores: saved?.levelTestScores || {},
                     practiceChecks: saved?.practiceChecks || {},
                     practiceScores: saved?.practiceScores || {},
-                    visitedLessons: Array.isArray(saved?.visitedLessons) ? saved.visitedLessons : []
+                    visitedLessons: Array.isArray(saved?.visitedLessons) ? saved.visitedLessons : [],
+                    dailyPracticeScores: saved?.dailyPracticeScores || {}
                 };
             }
 
@@ -3060,6 +3261,335 @@
                 return lessonId;
             }
 
+            function getTodayKey() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = `${now.getMonth() + 1}`.padStart(2, '0');
+                const day = `${now.getDate()}`.padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+
+            function hashText(text) {
+                let hash = 0;
+                for (let i = 0; i < text.length; i += 1) {
+                    hash = (hash * 31 + text.charCodeAt(i)) % 2147483647;
+                }
+                return hash;
+            }
+
+            function getDailyPracticeQuestions() {
+                const dateKey = getTodayKey();
+                const bank = [...Object.values(levelTestBanks).flat(), ...dailyPracticeExtras];
+                return bank
+                    .map((question, index) => ({
+                        question,
+                        score: hashText(`${dateKey}-${index}-${question.prompt}`)
+                    }))
+                    .sort((a, b) => a.score - b.score)
+                    .slice(0, 8)
+                    .map((entry, index) => ({
+                        ...entry.question,
+                        name: `daily-practice-${dateKey}-${index + 1}`,
+                        prompt: `${index + 1}. ${entry.question.prompt.replace(/^\d+\.\s*/, '')}`
+                    }));
+            }
+
+            function bindWeakTopicButtons() {
+                document.querySelectorAll('[data-review-lesson]').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const lessonId = this.dataset.reviewLesson;
+                        const navLink = document.querySelector(`#lesson-nav a[data-lesson="${lessonId}"]`);
+                        if (navLink) {
+                            navLink.click();
+                        } else {
+                            showLesson(lessonId);
+                        }
+                    });
+                });
+            }
+
+            function getWeakTopics() {
+                return lessonIds.map(lessonId => {
+                    const scores = [progressState.quizScores[lessonId], progressState.practiceScores[lessonId]]
+                        .filter(score => typeof score === 'number');
+                    if (!scores.length) return null;
+                    return {
+                        lessonId,
+                        score: Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
+                    };
+                })
+                    .filter(Boolean)
+                    .filter(item => item.score < PASS_THRESHOLD)
+                    .sort((a, b) => a.score - b.score)
+                    .slice(0, 3);
+            }
+
+            function renderWeakTopics() {
+                if (!weakTopicsList) return;
+                const weakTopics = getWeakTopics();
+                if (!weakTopics.length) {
+                    weakTopicsList.innerHTML = '<div class="review-item text-slate-500">មិនមានមេរៀនខ្សោយច្បាស់លាស់ទេ។ បន្តរក្សាលទ្ធផលល្អបែបនេះ។</div>';
+                    return;
+                }
+
+                weakTopicsList.innerHTML = weakTopics.map(item => `
+                    <div class="review-item">
+                        <div class="font-semibold text-slate-800">${getLessonDisplayName(item.lessonId)}</div>
+                        <div class="text-sm text-slate-600 mt-1">ពិន្ទុមធ្យម: ${item.score}%</div>
+                        <button type="button" data-review-lesson="${item.lessonId}">ទៅហាត់វិញ</button>
+                    </div>
+                `).join('');
+                bindWeakTopicButtons();
+            }
+
+            function getBadgeData() {
+                const badges = [];
+                if (isLevelPassed(1)) {
+                    badges.push({ title: 'Starter Badge', body: 'បានជាប់ Level 1 ហើយ។' });
+                }
+                if (isLevelPassed(2)) {
+                    badges.push({ title: 'Past Master', body: 'បានជាប់ Level 2 និងអាចប្រើ past tenses បានល្អ។' });
+                }
+                if (isLevelPassed(3)) {
+                    badges.push({ title: 'Future Navigator', body: 'បានជាប់ Level 3 និងគ្រប់គ្រង future tenses បានហើយ។' });
+                }
+                const dailyAttempts = Object.keys(progressState.dailyPracticeScores || {}).length;
+                if (dailyAttempts >= 3) {
+                    badges.push({ title: 'Daily Learner', body: `បានធ្វើ Daily Practice ${dailyAttempts} ថ្ងៃ។` });
+                }
+                const finalScore = progressState.levelTestScores['level-4'];
+                if (typeof finalScore === 'number' && finalScore >= PASS_THRESHOLD) {
+                    badges.push({ title: 'Final Test Finisher', body: `បានជាប់ Final Test ដោយពិន្ទុ ${finalScore}%。` });
+                }
+                if (typeof finalScore === 'number' && finalScore >= 85) {
+                    badges.push({ title: 'Gold Grammar Badge', body: 'បានពិន្ទុខ្ពស់លើ Final Test។' });
+                }
+
+                return {
+                    badges,
+                    finalScore,
+                    certificateReady: typeof finalScore === 'number' && finalScore >= PASS_THRESHOLD
+                };
+            }
+
+            function renderBadgesAndCertificate() {
+                const badgeData = getBadgeData();
+
+                if (badgeList) {
+                    badgeList.innerHTML = badgeData.badges.length
+                        ? badgeData.badges.map(badge => `
+                            <div class="badge-item">
+                                <div class="font-semibold text-slate-800">${badge.title}</div>
+                                <div class="text-sm text-slate-600 mt-1">${badge.body}</div>
+                            </div>
+                        `).join('')
+                        : '<div class="badge-item text-slate-500">ធ្វើតេស្តបន្ថែម ដើម្បីទទួល badge។</div>';
+                }
+
+                if (certificateBadge) {
+                    certificateBadge.textContent = badgeData.certificateReady ? 'Certified' : 'In Progress';
+                }
+
+                if (certificateSummary) {
+                    const profile = getCurrentProfile();
+                    const finalScoreText = typeof badgeData.finalScore === 'number' ? `${badgeData.finalScore}%` : 'មិនទាន់មាន';
+                    certificateSummary.innerHTML = `
+                        <p><strong>ឈ្មោះអ្នកប្រើ:</strong> ${profile?.name || 'អ្នកប្រើ'}</p>
+                        <p><strong>Final Test:</strong> ${finalScoreText}</p>
+                        <p><strong>Daily Practice ថ្ងៃដែលបានធ្វើ:</strong> ${Object.keys(progressState.dailyPracticeScores || {}).length}</p>
+                        <p>${badgeData.certificateReady ? 'អ្នកបានបញ្ចប់លក្ខខណ្ឌ certificate ហើយ។ អាចបោះពុម្ពឬរក្សាទុកបាន។' : 'សូមបន្តធ្វើ Final Test ឱ្យបាន 70% ឡើងទៅ ដើម្បីទទួល certificate។'}</p>
+                    `;
+                }
+
+                if (certificateBadgeList) {
+                    certificateBadgeList.innerHTML = badgeData.badges.length
+                        ? badgeData.badges.map(badge => `
+                            <div class="badge-item">
+                                <div class="font-semibold text-slate-800">${badge.title}</div>
+                                <div class="text-sm text-slate-600 mt-1">${badge.body}</div>
+                            </div>
+                        `).join('')
+                        : '<div class="badge-item text-slate-500">មិនទាន់មាន badge ទេ។</div>';
+                }
+            }
+
+            function renderDailyPracticeLesson() {
+                if (!dailyPracticeContainer) return;
+                const todayKey = getTodayKey();
+                const previousScore = progressState.dailyPracticeScores?.[todayKey];
+                const questions = getDailyPracticeQuestions();
+
+                if (dailyPracticePill) {
+                    dailyPracticePill.textContent = typeof previousScore === 'number'
+                        ? `ថ្ងៃនេះបាន ${previousScore}%`
+                        : 'ថ្ងៃនេះមិនទាន់ធ្វើ';
+                }
+
+                dailyPracticeContainer.innerHTML = `
+                    <div class="final-test-card bg-gradient-to-br from-cyan-50 to-sky-50">
+                        <h4 class="text-sky-800">Daily Practice for ${todayKey}</h4>
+                        <p class="text-slate-600 mt-2">សំណួរទាំងនេះនឹងស្ថេរជារៀងរាល់ថ្ងៃ ហើយប្តូរថ្មីនៅថ្ងៃបន្ទាប់។</p>
+                    </div>
+                    <div id="quiz-daily-practice" class="space-y-4" data-lesson="daily-practice">
+                        ${questions.map(question => createExtraQuizQuestion(question, question.lessonId)).join('')}
+                    </div>
+                    <button id="submit-daily-practice-btn" class="bg-cyan-600 text-white py-2 px-6 rounded-lg hover:bg-cyan-700 no-print">បញ្ជូន Daily Practice</button>
+                    <div id="daily-practice-result" class="quiz-result mt-2 font-bold text-lg">${typeof previousScore === 'number' ? `លទ្ធផលថ្ងៃនេះ: ${previousScore}%` : ''}</div>
+                `;
+
+                const submitBtn = document.getElementById('submit-daily-practice-btn');
+                if (submitBtn) {
+                    submitBtn.addEventListener('click', function() {
+                        const quizContainer = document.getElementById('quiz-daily-practice');
+                        if (!quizContainer) return;
+                        const quizQuestions = quizContainer.querySelectorAll('.quiz-question');
+                        let score = 0;
+
+                        quizQuestions.forEach(question => {
+                            const correctAnswer = question.dataset.correct;
+                            const selectedAnswer = question.querySelector('input[type="radio"]:checked');
+                            const explanationBox = question.querySelector('.explanation-box');
+                            const correctOptionLabel = question.querySelector(`input[value="${correctAnswer}"]`)?.nextElementSibling?.textContent.trim() || '';
+
+                            question.classList.remove('bg-green-100', 'border-green-400', 'bg-red-100', 'border-red-400');
+                            explanationBox?.classList.remove('visible');
+
+                            if (selectedAnswer && selectedAnswer.value === correctAnswer) {
+                                score += 1;
+                                question.classList.add('bg-green-100', 'border-green-400');
+                            } else {
+                                question.classList.add('bg-red-100', 'border-red-400');
+                            }
+
+                            if (explanationBox) {
+                                explanationBox.textContent = buildQuestionExplanation(question, correctOptionLabel);
+                                explanationBox.classList.add('visible');
+                            }
+                        });
+
+                        const percentage = Math.round((score / quizQuestions.length) * 100);
+                        progressState.dailyPracticeScores = progressState.dailyPracticeScores || {};
+                progressState.dailyPracticeScores[todayKey] = percentage;
+                saveProgress();
+                updateProgressUI();
+                logProfileActivity(`បានធ្វើ Daily Practice ថ្ងៃ ${todayKey} បាន ${percentage}%`);
+                if (dailyPracticePill) {
+                    dailyPracticePill.textContent = `ថ្ងៃនេះបាន ${percentage}%`;
+                }
+
+                const result = document.getElementById('daily-practice-result');
+                if (result) {
+                    result.textContent = `អ្នកទទួលបាន ${score}/${quizQuestions.length} ពិន្ទុ (${percentage}%)`;
+                    result.style.color = percentage >= PASS_THRESHOLD ? 'green' : 'red';
+                        }
+                    });
+                }
+            }
+
+            function filterLessonNavigation(query) {
+                const normalized = (query || '').trim().toLowerCase();
+                const accordionSections = Array.from(document.querySelectorAll('#lesson-nav > div'));
+                const directLinks = Array.from(document.querySelectorAll('#lesson-nav > a'));
+
+                accordionSections.forEach(section => {
+                    const headingText = section.querySelector('.accordion-btn span')?.textContent.toLowerCase() || '';
+                    let visibleCount = 0;
+
+                    section.querySelectorAll('li').forEach(item => {
+                        const link = item.querySelector('a');
+                        const text = ((link?.dataset.baseLabel || link?.textContent || '').replace(' (Locked)', '')).toLowerCase();
+                        const matches = !normalized || headingText.includes(normalized) || text.includes(normalized);
+                        item.style.display = matches ? '' : 'none';
+                        if (matches) visibleCount += 1;
+                    });
+
+                    section.style.display = visibleCount ? '' : 'none';
+                });
+
+                directLinks.forEach(link => {
+                    const text = ((link.dataset.baseLabel || link.textContent || '').replace(' (Locked)', '')).toLowerCase();
+                    link.style.display = !normalized || text.includes(normalized) ? '' : 'none';
+                });
+            }
+
+            function exportProfilesBackup() {
+                const payload = {
+                    version: 1,
+                    exportedAt: new Date().toISOString(),
+                    currentProfileId: profileStore.currentProfileId,
+                    profiles: profileStore.profiles
+                };
+                const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `grammar-backup-${getTodayKey()}.json`;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                URL.revokeObjectURL(url);
+                setProfileStatus('បាន export backup រួចហើយ។', '#15803d');
+            }
+
+            async function importProfilesBackup(file) {
+                if (!file) return;
+                const rawText = await file.text();
+                const data = JSON.parse(rawText);
+                const importedProfiles = Array.isArray(data?.profiles) ? data.profiles : [];
+
+                if (!importedProfiles.length) {
+                    throw new Error('Backup file មិនមាន profile ទេ។');
+                }
+
+                const newProfiles = importedProfiles.map(profile => {
+                    const imported = createProfileRecord(
+                        getUniqueProfileName(profile.name || 'Imported User'),
+                        sanitizeProgressState(profile.progress)
+                    );
+                    imported.activityLog = Array.isArray(profile.activityLog) ? profile.activityLog.slice(0, 20) : [];
+                    imported.activityLog.unshift({
+                        text: 'បាននាំចូល profile ពី backup',
+                        at: new Date().toISOString()
+                    });
+                    return imported;
+                });
+
+                profileStore.profiles.push(...newProfiles);
+                profileStore.currentProfileId = newProfiles[0].id;
+                progressState = cloneProgressState(newProfiles[0].progress);
+                saveProfileStore();
+                renderProfileOptions();
+                updateProgressUI();
+                renderFinalTest();
+                bindLevelTestControls();
+                renderDailyPracticeLesson();
+                showLesson('welcome');
+                setProfileStatus(`បាន import ${newProfiles.length} profile រួចហើយ។`, '#15803d');
+            }
+
+            function resetCurrentProfileProgress() {
+                const profile = getCurrentProfile();
+                if (!profile) return;
+                if (!window.confirm(`តើអ្នកចង់លុប progress របស់ ${profile.name} មែនទេ?`)) {
+                    return;
+                }
+
+                profile.progress = createEmptyProgressState();
+                profile.activityLog = [{
+                    text: 'បាន reset progress របស់ profile នេះ',
+                    at: new Date().toISOString()
+                }];
+                progressState = cloneProgressState(profile.progress);
+                saveProfileStore();
+                renderProfileOptions();
+                updateProgressUI();
+                renderFinalTest();
+                bindLevelTestControls();
+                renderDailyPracticeLesson();
+                showLesson('welcome');
+                setProfileStatus(`បាន reset progress របស់ ${profile.name}`, '#c2410c');
+            }
+
             function switchProfile(profileId) {
                 const profile = profileStore.profiles.find(item => item.id === profileId);
                 if (!profile) return;
@@ -3070,6 +3600,7 @@
                 updateProgressUI();
                 renderFinalTest();
                 bindLevelTestControls();
+                renderDailyPracticeLesson();
                 showLesson('welcome');
                 setProfileStatus(`បានប្តូរទៅអ្នកប្រើ ${profile.name}`, '#2563eb');
             }
@@ -3096,6 +3627,7 @@
                 updateProgressUI();
                 renderFinalTest();
                 bindLevelTestControls();
+                renderDailyPracticeLesson();
                 showLesson('welcome');
 
                 if (profileNameInput) {
@@ -3123,6 +3655,9 @@
                 }
                 updateNavigationLocks();
                 updateFinalTestStatusText();
+                renderWeakTopics();
+                renderBadgesAndCertificate();
+                filterLessonNavigation(lessonSearchInput?.value || '');
             }
 
             function updateFinalTestStatusText() {
@@ -3746,17 +4281,59 @@
                     }
                 });
             }
+
+            if (exportBackupBtn) {
+                exportBackupBtn.addEventListener('click', exportProfilesBackup);
+            }
+
+            if (importBackupBtn && importBackupInput) {
+                importBackupBtn.addEventListener('click', function() {
+                    importBackupInput.click();
+                });
+                importBackupInput.addEventListener('change', async function() {
+                    try {
+                        await importProfilesBackup(this.files?.[0]);
+                    } catch (error) {
+                        setProfileStatus(error.message || 'មិនអាច import backup បានទេ។', '#dc2626');
+                    } finally {
+                        this.value = '';
+                    }
+                });
+            }
+
+            if (resetProfileBtn) {
+                resetProfileBtn.addEventListener('click', resetCurrentProfileProgress);
+            }
+
+            if (lessonSearchInput) {
+                lessonSearchInput.addEventListener('input', function() {
+                    filterLessonNavigation(this.value);
+                });
+            }
+
+            if (openCertificateBtn) {
+                openCertificateBtn.addEventListener('click', function() {
+                    const certificateLink = document.querySelector('#lesson-nav a[data-lesson="certificate"]');
+                    if (certificateLink) {
+                        certificateLink.click();
+                    } else {
+                        showLesson('certificate');
+                    }
+                });
+            }
             
             // Initial setup
             saveProfileStore();
             renderProfileOptions();
             populateVerbTable();
             renderLessonEnhancements();
+            renderDailyPracticeLesson();
             renderFinalTest();
             bindLevelTestControls();
             prepareQuizQuestions();
             bindPracticeButtons();
             updateProgressUI();
+            filterLessonNavigation('');
             showLesson('welcome');
         });
     </script>
