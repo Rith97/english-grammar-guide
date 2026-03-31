@@ -263,20 +263,26 @@
             font-weight: 700;
         }
         .tool-btn-row {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.55rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
             margin-top: 0.75rem;
         }
         .tool-btn {
-            border-radius: 12px;
-            padding: 0.65rem 0.75rem;
-            font-size: 0.82rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            border-radius: 999px;
+            padding: 0.42rem 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-align: center;
             border: 1px solid #cbd5e1;
             background: #fff;
             color: #334155;
+            white-space: nowrap;
+            line-height: 1.1;
         }
         .tool-btn.warn {
             border-color: #fdba74;
@@ -386,7 +392,7 @@
                 font-size: 0.72rem;
             }
             .tool-btn-row {
-                grid-template-columns: 1fr;
+                gap: 0.4rem;
             }
             #profile-sidebar label,
             #profile-sidebar p,
@@ -399,6 +405,10 @@
                 padding-top: 0.65rem;
                 padding-bottom: 0.65rem;
                 font-size: 0.95rem;
+            }
+            .tool-btn {
+                padding: 0.38rem 0.72rem;
+                font-size: 0.72rem;
             }
             .profile-history-list {
                 gap: 0.45rem;
