@@ -12,6 +12,7 @@
         body {
             font-family: 'Kantumruy Pro', sans-serif;
             line-height: 1.7;
+            overflow-x: hidden;
         }
         .lesson-content {
             display: none;
@@ -222,6 +223,67 @@
             border-radius: 14px;
             margin-top: 1rem;
         }
+        .mobile-nav-toggle {
+            display: none;
+        }
+        .mobile-nav-panel {
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            body {
+                font-size: 15px;
+            }
+            h3 {
+                font-size: 1.05rem;
+            }
+            .mobile-nav-toggle {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.75rem;
+                padding: 0.9rem 1rem;
+                border: 1px solid #bfdbfe;
+                border-radius: 14px;
+                background: linear-gradient(135deg, #eff6ff, #f8fbff);
+                color: #1d4ed8;
+                font-weight: 700;
+                margin-bottom: 1rem;
+            }
+            .mobile-nav-panel {
+                display: none;
+            }
+            .mobile-nav-panel.open {
+                display: block;
+            }
+            .example-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            .example-table th,
+            .example-table td {
+                padding: 10px 12px;
+                font-size: 0.95rem;
+            }
+            .quiz-question {
+                padding: 1rem 0.9rem;
+            }
+            .timeline-strip {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .print-btn {
+                float: none !important;
+                display: inline-flex;
+                margin-bottom: 0.75rem;
+            }
+            #verb-table {
+                min-width: 640px;
+            }
+        }
 
         /* Print-specific styles */
         @media print {
@@ -246,24 +308,29 @@
 <body class="bg-slate-100 bg-gradient-to-br from-sky-50 via-white to-blue-100">
 
     <div class="container mx-auto p-4 md:p-8">
-        <header class="text-center mb-8 no-print bg-white/80 backdrop-blur rounded-3xl shadow-lg border border-white/70 px-6 py-8">
+        <header class="text-center mb-6 md:mb-8 no-print bg-white/80 backdrop-blur rounded-2xl md:rounded-3xl shadow-lg border border-white/70 px-4 py-6 md:px-6 md:py-8">
             <p class="text-sm font-semibold uppercase tracking-[0.25em] text-sky-600">English Grammar Guide</p>
-            <h1 class="text-3xl md:text-5xl font-bold text-blue-900 mt-3">រៀនវេយ្យាករណ៍ភាសាអង់គ្លេស</h1>
+            <h1 class="text-2xl leading-tight sm:text-3xl md:text-5xl font-bold text-blue-900 mt-3">រៀនវេយ្យាករណ៍ភាសាអង់គ្លេស</h1>
             <p class="text-gray-600 mt-3 max-w-2xl mx-auto">មគ្គុទ្ទេសក៍ពេញលេញសម្រាប់រៀន grammar, tenses, parts of speech, writing skills និងលំហាត់អនុវត្តជាច្រើននៅក្នុងទំព័រតែមួយ។</p>
         </header>
 
-        <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex flex-col md:flex-row gap-5 md:gap-8">
             <!-- Sidebar for Navigation -->
-            <aside class="w-full md:w-1/4 bg-white p-6 rounded-2xl shadow-md self-start no-print md:sticky md:top-6">
+            <aside class="w-full md:w-1/4 bg-white p-4 md:p-6 rounded-2xl shadow-md self-start no-print md:sticky md:top-6">
                 <h2 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">បញ្ជីមេរៀន</h2>
-                <div id="progress-sidebar" class="progress-card mb-4 bg-sky-50 border-sky-100">
-                    <h4 class="text-sky-800">ការរីកចម្រើន</h4>
-                    <div class="progress-bar mt-3"><span id="progress-bar-fill" style="width: 0%"></span></div>
-                    <p id="progress-text" class="text-sm text-slate-600 mt-3">បានបញ្ចប់ 0/12 មេរៀន</p>
-                    <p id="progress-average" class="text-sm text-slate-600 mt-1">មធ្យមពិន្ទុ: 0%</p>
-                    <p id="level-hint" class="text-sm text-slate-600 mt-2">ត្រូវបាន 70% ឡើងទៅ ដើម្បីបើក Level បន្ទាប់។</p>
-                </div>
-                <nav id="lesson-nav" class="space-y-2">
+                <button id="mobile-nav-toggle" class="mobile-nav-toggle no-print" type="button" aria-expanded="false" aria-controls="mobile-nav-panel">
+                    <span>បើកមឺនុយមេរៀន</span>
+                    <span id="mobile-nav-icon">+</span>
+                </button>
+                <div id="mobile-nav-panel" class="mobile-nav-panel">
+                    <div id="progress-sidebar" class="progress-card mb-4 bg-sky-50 border-sky-100">
+                        <h4 class="text-sky-800">ការរីកចម្រើន</h4>
+                        <div class="progress-bar mt-3"><span id="progress-bar-fill" style="width: 0%"></span></div>
+                        <p id="progress-text" class="text-sm text-slate-600 mt-3">បានបញ្ចប់ 0/12 មេរៀន</p>
+                        <p id="progress-average" class="text-sm text-slate-600 mt-1">មធ្យមពិន្ទុ: 0%</p>
+                        <p id="level-hint" class="text-sm text-slate-600 mt-2">ត្រូវបាន 70% ឡើងទៅ ដើម្បីបើក Level បន្ទាប់។</p>
+                    </div>
+                    <nav id="lesson-nav" class="space-y-2">
                     <!-- Present Tenses -->
                     <div>
                         <button class="accordion-btn w-full text-left py-2 px-4 text-gray-800 hover:bg-blue-50 rounded-md flex justify-between items-center font-semibold"><span>បច្ចុប្បន្នកាល</span><svg class="accordion-arrow w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
@@ -317,20 +384,21 @@
                         </ul>
                     </div>
                      <!-- Common Verbs Link -->
-                    <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="common-verbs">បញ្ជីកិរិយាសព្ទ</a>
-                    <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="final-test">Final Test</a>
-                </nav>
+                        <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="common-verbs">បញ្ជីកិរិយាសព្ទ</a>
+                        <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="final-test">Final Test</a>
+                    </nav>
+                </div>
             </aside>
 
             <!-- Main Content Area -->
-            <main id="main-content" class="w-full md:w-3/4 bg-white p-6 md:p-8 rounded-2xl shadow-md">
+            <main id="main-content" class="w-full md:w-3/4 bg-white p-4 md:p-8 rounded-2xl shadow-md overflow-hidden">
                 <!-- Welcome Message -->
                 <div id="welcome-content" class="lesson-content active">
-                    <div class="rounded-3xl bg-gradient-to-br from-blue-900 via-sky-800 to-cyan-700 text-white p-8 md:p-10 shadow-xl overflow-hidden relative">
+                    <div class="rounded-3xl bg-gradient-to-br from-blue-900 via-sky-800 to-cyan-700 text-white p-5 md:p-10 shadow-xl overflow-hidden relative">
                         <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_white,_transparent_35%),radial-gradient(circle_at_bottom_left,_white,_transparent_25%)]"></div>
                         <div class="relative">
                             <p class="text-sm uppercase tracking-[0.3em] text-sky-100">Study Dashboard</p>
-                            <h2 class="text-3xl md:text-4xl font-bold mt-3">សូមស្វាគមន៍មកកាន់មេរៀនកាលទាំង ១២</h2>
+                            <h2 class="text-2xl md:text-4xl font-bold mt-3 leading-tight">សូមស្វាគមន៍មកកាន់មេរៀនកាលទាំង ១២</h2>
                             <p class="mt-4 text-sky-50 max-w-2xl">ជ្រើសរើសមេរៀនពីផ្នែកខាងឆ្វេង ដើម្បីរៀន structure, signal words, examples និង practice quiz សម្រាប់កាលនីមួយៗ។</p>
                             <div class="grid md:grid-cols-3 gap-4 mt-8 text-left">
                                 <div class="bg-white/10 border border-white/15 rounded-2xl p-4">
@@ -1930,6 +1998,9 @@
             const progressText = document.getElementById('progress-text');
             const progressAverage = document.getElementById('progress-average');
             const levelHint = document.getElementById('level-hint');
+            const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+            const mobileNavPanel = document.getElementById('mobile-nav-panel');
+            const mobileNavIcon = document.getElementById('mobile-nav-icon');
             const finalTestStatus = document.getElementById('final-test-status');
             const finalLevelTestsContainer = document.getElementById('final-level-tests');
             const progressStorageKey = 'tenses-progress-v1';
@@ -3111,6 +3182,36 @@
                 }
                 markVisitedLesson(lessonId);
             }
+
+            function setMobileNavState(isOpen) {
+                if (!mobileNavPanel || !mobileNavToggle || window.innerWidth >= 768) return;
+                mobileNavPanel.classList.toggle('open', isOpen);
+                mobileNavToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                if (mobileNavIcon) {
+                    mobileNavIcon.textContent = isOpen ? '−' : '+';
+                }
+                const label = mobileNavToggle.querySelector('span');
+                if (label) {
+                    label.textContent = isOpen ? 'បិទមឺនុយមេរៀន' : 'បើកមឺនុយមេរៀន';
+                }
+            }
+
+            if (mobileNavToggle && mobileNavPanel) {
+                mobileNavToggle.addEventListener('click', function() {
+                    const isOpen = mobileNavPanel.classList.contains('open');
+                    setMobileNavState(!isOpen);
+                });
+
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth >= 768) {
+                        mobileNavPanel.classList.remove('open');
+                        mobileNavToggle.setAttribute('aria-expanded', 'false');
+                        if (mobileNavIcon) mobileNavIcon.textContent = '+';
+                        const label = mobileNavToggle.querySelector('span');
+                        if (label) label.textContent = 'បើកមឺនុយមេរៀន';
+                    }
+                });
+            }
             
             // Add click event listeners to all lesson links
             allLinks.forEach(link => {
@@ -3131,6 +3232,10 @@
                         this.classList.add('bg-blue-100', 'font-bold', 'text-blue-600');
 
                         showLesson(lessonId);
+                        if (window.innerWidth < 768) {
+                            setMobileNavState(false);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
                     });
                 }
             });
