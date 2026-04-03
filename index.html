@@ -615,6 +615,7 @@
                     </div>
                         <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="daily-practice">លំហាត់ប្រចាំថ្ងៃ</a>
                         <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="daily-reading">ការអានប្រចាំថ្ងៃ</a>
+                        <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="smart-helper">ជំនួយវេយ្យាករណ៍ឆ្លាតវៃ</a>
                         <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="certificate">វិញ្ញាបនបត្រ</a>
                      <!-- Common Verbs Link -->
                         <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="common-verbs">បញ្ជីកិរិយាសព្ទ</a>
@@ -2256,6 +2257,46 @@
                     <div id="daily-reading-container" class="space-y-4"></div>
                 </div>
 
+                <div id="smart-helper-content" class="lesson-content space-y-6">
+                    <button class="print-btn float-right p-2 rounded-md bg-gray-200 hover:bg-gray-300 no-print">🖨️ បោះពុម្ពជំនួយនេះ</button>
+                    <div class="daily-practice-header">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">🤖 ជំនួយវេយ្យាករណ៍ឆ្លាតវៃ</h2>
+                            <p class="text-slate-600 mt-2">វាយពាក្យ ប្រយោគ ឬ paragraph ខ្លីមួយ ហើយប្រព័ន្ធនេះនឹងជួយទស្សន៍ទាយ tense, ផ្នែកនៃពាក្យ និងណែនាំមេរៀនដែលគួរទៅមើលបន្ត។</p>
+                        </div>
+                        <span class="daily-practice-pill">Smart Helper</span>
+                    </div>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <h4>អាចជួយអ្វីបានខ្លះ</h4>
+                            <p>ទស្សន៍ទាយ tense, សម្គាល់ពាក្យថាជា noun/verb/adjective ជាដើម និងណែនាំមេរៀនដែលពាក់ព័ន្ធ។</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>របៀបប្រើល្អបំផុត</h4>
+                            <p>ប្រើជាមួយពាក្យអង់គ្លេស ប្រយោគអង់គ្លេស ឬ paragraph ខ្លីៗ។ សម្រាប់លទ្ធផលល្អ សូមវាយឱ្យច្បាស់។</p>
+                        </div>
+                    </div>
+                    <div class="final-test-card bg-gradient-to-br from-violet-50 to-fuchsia-50 space-y-4">
+                        <div>
+                            <h4 class="text-violet-800">សាកល្បងឧទាហរណ៍</h4>
+                            <div class="flex flex-wrap gap-2 mt-3 no-print">
+                                <button type="button" class="mode-btn helper-sample-btn" data-sample="I have studied English for three years.">Tense</button>
+                                <button type="button" class="mode-btn helper-sample-btn" data-sample="carefully">Part of Speech</button>
+                                <button type="button" class="mode-btn helper-sample-btn" data-sample="My school library is a quiet place where students can read and work together.">Writing</button>
+                            </div>
+                        </div>
+                        <label for="smart-helper-input" class="font-semibold text-slate-700">វាយអត្ថបទរបស់អ្នក</label>
+                        <textarea id="smart-helper-input" class="w-full min-h-[150px] rounded-2xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-300" placeholder="ឧទាហរណ៍: She is doing her homework now."></textarea>
+                        <div class="flex flex-wrap gap-3 no-print">
+                            <button id="smart-helper-analyze-btn" type="button" class="bg-violet-600 text-white py-2 px-6 rounded-lg hover:bg-violet-700">វិភាគ</button>
+                            <button id="smart-helper-clear-btn" type="button" class="bg-slate-200 text-slate-700 py-2 px-6 rounded-lg hover:bg-slate-300">សម្អាត</button>
+                        </div>
+                    </div>
+                    <div id="smart-helper-result" class="space-y-4">
+                        <div class="summary-card text-slate-500">សូមវាយប្រយោគ ឬពាក្យអង់គ្លេសមួយសិន ដើម្បីឱ្យ Smart Helper ជួយវិភាគ។</div>
+                    </div>
+                </div>
+
                 <div id="certificate-content" class="lesson-content space-y-6">
                     <button class="print-btn float-right p-2 rounded-md bg-gray-200 hover:bg-gray-300 no-print">🖨️ បោះពុម្ពវិញ្ញាបនបត្រ</button>
                     <h2 class="text-2xl font-bold text-gray-800">🏅 វិញ្ញាបនបត្រ និងស្លាកសមិទ្ធផល</h2>
@@ -2330,6 +2371,10 @@
             const dailyReadingPill = document.getElementById('daily-reading-pill');
             const dailyReadingTopic = document.getElementById('daily-reading-topic');
             const dailyReadingDate = document.getElementById('daily-reading-date');
+            const smartHelperInput = document.getElementById('smart-helper-input');
+            const smartHelperAnalyzeBtn = document.getElementById('smart-helper-analyze-btn');
+            const smartHelperClearBtn = document.getElementById('smart-helper-clear-btn');
+            const smartHelperResult = document.getElementById('smart-helper-result');
             const certificateSummary = document.getElementById('certificate-summary');
             const certificateBadge = document.getElementById('certificate-badge');
             const certificateBadgeList = document.getElementById('certificate-badge-list');
@@ -3520,6 +3565,191 @@
                 return dailyReadingArticles[index];
             }
 
+            function getLikelyTenseInfo(text) {
+                const lower = text.toLowerCase();
+                const tenseChecks = [
+                    {
+                        lessonId: 'future-perfect-continuous',
+                        label: 'Future Perfect Continuous',
+                        test: value => /\bwill have been\s+\w+ing\b/.test(value) || (/\bby\b/.test(value) && /\bfor\b/.test(value) && /(\bnext\b|\btomorrow\b)/.test(value)),
+                        reason: 'មានសញ្ញា will have been + V-ing ឬ by + future point + for + duration។'
+                    },
+                    {
+                        lessonId: 'future-perfect',
+                        label: 'Future Perfect',
+                        test: value => /\bwill have\s+\w+/.test(value) && !/\bwill have been\b/.test(value),
+                        reason: 'មានរចនាសម្ព័ន្ធ will have + V3 ឬគំនិតថាសកម្មភាពនឹងបញ្ចប់មុនពេលអនាគតមួយ។'
+                    },
+                    {
+                        lessonId: 'future-continuous',
+                        label: 'Future Continuous',
+                        test: value => /\bwill be\s+\w+ing\b/.test(value) || (/\bthis time tomorrow\b|\bat \d/.test(value) && /(\btomorrow\b|\btonight\b)/.test(value)),
+                        reason: 'មាន will be + V-ing ឬសកម្មភាពកំពុងបន្តនៅពេលអនាគតជាក់លាក់។'
+                    },
+                    {
+                        lessonId: 'future-simple',
+                        label: 'Future Simple',
+                        test: value => /\bwill\b/.test(value) || /\btomorrow\b|\bnext\b|\bsoon\b/.test(value),
+                        reason: 'មានសញ្ញាអនាគតដូចជា will, tomorrow, next, soon។'
+                    },
+                    {
+                        lessonId: 'past-perfect-continuous',
+                        label: 'Past Perfect Continuous',
+                        test: value => /\bhad been\s+\w+ing\b/.test(value),
+                        reason: 'មានរចនាសម្ព័ន្ធ had been + V-ing ដែលបង្ហាញរយៈពេលមុនចំណុចអតីតមួយ។'
+                    },
+                    {
+                        lessonId: 'past-perfect',
+                        label: 'Past Perfect',
+                        test: value => /\bhad\s+\w+/.test(value) && !/\bhad been\s+\w+ing\b/.test(value),
+                        reason: 'មាន had + V3 ឬសកម្មភាពមួយកើតមុនសកម្មភាពអតីតមួយទៀត។'
+                    },
+                    {
+                        lessonId: 'past-continuous',
+                        label: 'Past Continuous',
+                        test: value => /(\bwas\b|\bwere\b)/.test(value) && /\b\w+ing\b/.test(value),
+                        reason: 'មាន was/were + V-ing ដែលបង្ហាញសកម្មភាពកំពុងបន្តនៅអតីតកាល។'
+                    },
+                    {
+                        lessonId: 'past-simple',
+                        label: 'Past Simple',
+                        test: value => /(\byesterday\b|\blast\b|\bago\b|\bin \d{4}\b)/.test(value),
+                        reason: 'មានសញ្ញាអតីតកាលច្បាស់ដូចជា yesterday, last, ago, in + year។'
+                    },
+                    {
+                        lessonId: 'present-perfect-continuous',
+                        label: 'Present Perfect Continuous',
+                        test: value => /\b(has|have) been\s+\w+ing\b/.test(value),
+                        reason: 'មាន has/have been + V-ing ដែលផ្តោតលើរយៈពេលបន្តមកដល់ឥឡូវ។'
+                    },
+                    {
+                        lessonId: 'present-perfect',
+                        label: 'Present Perfect',
+                        test: value => (/\b(has|have)\b/.test(value) && (/\balready\b|\byet\b|\bjust\b|\bsince\b|\bfor\b/.test(value) || /\b(has|have)\s+\w+/.test(value))) && !/\b(has|have) been\s+\w+ing\b/.test(value),
+                        reason: 'មាន has/have + V3 ឬសញ្ញាដូចជា already, yet, just, since, for។'
+                    },
+                    {
+                        lessonId: 'present-continuous',
+                        label: 'Present Continuous',
+                        test: value => /\b(am|is|are)\s+\w+ing\b/.test(value) || /(\bnow\b|\bat the moment\b|\bright now\b)/.test(value),
+                        reason: 'មាន am/is/are + V-ing ឬពាក្យសម្គាល់ដូចជា now, right now, at the moment។'
+                    }
+                ];
+
+                const matched = tenseChecks.find(item => item.test(lower));
+                if (matched) {
+                    return {
+                        ...matched,
+                        summary: lessonSummaries[matched.lessonId]
+                    };
+                }
+
+                return {
+                    lessonId: 'present-simple',
+                    label: 'Present Simple',
+                    reason: 'មិនមានសញ្ញាពេលវេលាពិសេសខ្លាំងទេ ដូច្នេះវាអាចជាការពិតទូទៅ ឬទម្លាប់ប្រចាំថ្ងៃ។',
+                    summary: lessonSummaries['present-simple']
+                };
+            }
+
+            function getLikelyWordClassInfo(text) {
+                const cleaned = text.toLowerCase().replace(/[^a-z\s-]/g, ' ').trim();
+                const words = cleaned.split(/\s+/).filter(Boolean);
+                if (words.length !== 1) return null;
+
+                const word = words[0];
+                const pronouns = ['i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them', 'my', 'your', 'our', 'their'];
+                const conjunctions = ['and', 'but', 'or', 'because', 'although', 'so', 'while', 'if'];
+                const prepositions = ['in', 'on', 'at', 'under', 'over', 'with', 'for', 'from', 'to', 'into', 'of', 'between', 'behind'];
+                const interjections = ['wow', 'oh', 'ouch', 'hey', 'alas'];
+                const verbWords = new Set(verbList.flatMap(verb => [verb.v1, verb.v2.split('/')[0], verb.v3.split('/')[0]]).map(item => item.toLowerCase()));
+
+                if (pronouns.includes(word)) return { label: 'Pronoun', lessonId: 'pronoun', reason: 'ពាក្យនេះជំនួស noun ដូច្នេះវាស្រដៀង pronoun។' };
+                if (conjunctions.includes(word)) return { label: 'Conjunction', lessonId: 'conjunction', reason: 'ពាក្យនេះប្រើភ្ជាប់ពាក្យ ឬប្រយោគ។' };
+                if (prepositions.includes(word)) return { label: 'Preposition', lessonId: 'preposition', reason: 'ពាក្យនេះបង្ហាញទីតាំង ពេលវេលា ឬទំនាក់ទំនង។' };
+                if (interjections.includes(word)) return { label: 'Interjection', lessonId: 'interjection', reason: 'ពាក្យនេះជាពាក្យឧទាន បង្ហាញអារម្មណ៍ភ្លាមៗ។' };
+                if (word.endsWith('ly')) return { label: 'Adverb', lessonId: 'adverb', reason: 'ពាក្យបញ្ចប់ដោយ -ly ជាញឹកញាប់ជា adverb។' };
+                if (/(tion|ment|ness|ity|ship|er|or)$/.test(word)) return { label: 'Noun', lessonId: 'noun', reason: 'បច្ច័យនេះជាញឹកញាប់ឃើញលើ noun។' };
+                if (/(ous|ful|able|ible|al|ive|ic|less)$/.test(word)) return { label: 'Adjective', lessonId: 'adjective', reason: 'បច្ច័យនេះជាញឹកញាប់ឃើញលើ adjective។' };
+                if (verbWords.has(word) || /(ate|ize|ise|ing|ed)$/.test(word)) return { label: 'Verb', lessonId: 'verb', reason: 'ទម្រង់ពាក្យនេះស្រដៀងកិរិយាសព្ទ ឬមាននៅក្នុងបញ្ជី verb។' };
+
+                return { label: 'Noun', lessonId: 'noun', reason: 'ពាក្យតែមួយនេះមើលទៅស្រដៀង noun បំផុត ប៉ុន្តែត្រូវមើលក្នុងប្រយោគដើម្បីប្រាកដ។' };
+            }
+
+            function getWritingGuidance(text) {
+                const sentences = text.split(/[.!?]+/).map(item => item.trim()).filter(Boolean);
+                if (sentences.length >= 5 || text.length > 260) {
+                    return {
+                        lessonId: 'essay-writing',
+                        title: 'Essay Writing',
+                        tip: 'អត្ថបទរបស់អ្នកវែងល្មមហើយ។ សូមពិនិត្យថាមាន introduction, body និង conclusion ឬនៅ។'
+                    };
+                }
+                if (sentences.length >= 2 || text.length > 80) {
+                    return {
+                        lessonId: 'paragraph-writing',
+                        title: 'Paragraph Writing',
+                        tip: 'អត្ថបទនេះសមស្របសម្រាប់ paragraph។ សូមពិនិត្យថាមាន topic sentence, supporting details និង concluding sentence។'
+                    };
+                }
+                return {
+                    lessonId: 'paragraph-writing',
+                    title: 'Sentence Building',
+                    tip: 'នេះនៅជាប្រយោគខ្លី។ បើចង់អភិវឌ្ឍទៅជា paragraph សូមបន្ថែម supporting sentences 2-3 ប្រយោគទៀត។'
+                };
+            }
+
+            function renderSmartHelperResult() {
+                if (!smartHelperResult || !smartHelperInput) return;
+                const text = smartHelperInput.value.trim();
+                if (!text) {
+                    smartHelperResult.innerHTML = '<div class="summary-card text-slate-500">សូមវាយប្រយោគ ឬពាក្យអង់គ្លេសមួយសិន ដើម្បីឱ្យ Smart Helper ជួយវិភាគ។</div>';
+                    return;
+                }
+
+                const tenseInfo = getLikelyTenseInfo(text);
+                const wordClassInfo = getLikelyWordClassInfo(text);
+                const writingInfo = getWritingGuidance(text);
+                const sentences = text.split(/[.!?]+/).map(item => item.trim()).filter(Boolean).length;
+                const words = text.trim().split(/\s+/).filter(Boolean).length;
+                const recommendedLessons = [...new Set([tenseInfo?.lessonId, wordClassInfo?.lessonId, writingInfo?.lessonId].filter(Boolean))];
+
+                smartHelperResult.innerHTML = `
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <h4>Likely Tense</h4>
+                            <p class="font-semibold text-slate-800 mt-2">${tenseInfo.label}</p>
+                            <p class="text-slate-600 mt-2">${tenseInfo.reason}</p>
+                            <p class="text-slate-600 mt-2"><strong>Form:</strong> ${tenseInfo.summary?.form || 'មិនមានទិន្នន័យ'}</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Word Class Hint</h4>
+                            <p class="font-semibold text-slate-800 mt-2">${wordClassInfo ? wordClassInfo.label : 'សូមប្រើពាក្យតែមួយបើចង់ស្គាល់ part of speech'}</p>
+                            <p class="text-slate-600 mt-2">${wordClassInfo ? wordClassInfo.reason : 'ប្រសិនបើអ្នកវាយតែពាក្យមួយ ដូចជា carefully ឬ happiness Helper នឹងទស្សន៍ទាយថាជាផ្នែកពាក្យអ្វី។'}</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Writing Hint</h4>
+                            <p class="font-semibold text-slate-800 mt-2">${writingInfo.title}</p>
+                            <p class="text-slate-600 mt-2">${writingInfo.tip}</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Quick Stats</h4>
+                            <p class="text-slate-700 mt-2">ចំនួនពាក្យ: <strong>${words}</strong></p>
+                            <p class="text-slate-700 mt-1">ចំនួនប្រយោគ: <strong>${sentences}</strong></p>
+                            <p class="text-slate-600 mt-2">Helper នេះប្រើ grammar rules និង signal words ដែលមានក្នុង app នេះ។</p>
+                        </div>
+                    </div>
+                    <div class="mini-tip"><strong>សេចក្ដីណែនាំ:</strong> ${tenseInfo.summary?.usage ? `បើគោលបំណងរបស់អ្នកគឺ ${tenseInfo.summary.usage}, សូមពិនិត្យ lesson នេះបន្ថែម។` : 'សូមពិនិត្យ lesson ពាក់ព័ន្ធបន្ថែម។'}</div>
+                    <div class="final-test-card">
+                        <h4 class="text-violet-800">មេរៀនណែនាំ</h4>
+                        <div class="flex flex-wrap gap-2 mt-3 no-print">
+                            ${recommendedLessons.map(lessonId => `<button type="button" class="mode-btn" data-review-lesson="${lessonId}">${getLessonDisplayName(lessonId)}</button>`).join('')}
+                        </div>
+                    </div>
+                `;
+                bindWeakTopicButtons();
+            }
+
             function bindWeakTopicButtons() {
                 document.querySelectorAll('[data-review-lesson]').forEach(button => {
                     button.addEventListener('click', function() {
@@ -4655,6 +4885,34 @@
                     }
                 });
             }
+
+            if (smartHelperAnalyzeBtn) {
+                smartHelperAnalyzeBtn.addEventListener('click', renderSmartHelperResult);
+            }
+
+            if (smartHelperClearBtn && smartHelperInput) {
+                smartHelperClearBtn.addEventListener('click', function() {
+                    smartHelperInput.value = '';
+                    renderSmartHelperResult();
+                });
+            }
+
+            if (smartHelperInput) {
+                smartHelperInput.addEventListener('keydown', function(event) {
+                    if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+                        event.preventDefault();
+                        renderSmartHelperResult();
+                    }
+                });
+            }
+
+            document.querySelectorAll('.helper-sample-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!smartHelperInput) return;
+                    smartHelperInput.value = this.dataset.sample || '';
+                    renderSmartHelperResult();
+                });
+            });
             
             // Initial setup
             saveProfileStore();
