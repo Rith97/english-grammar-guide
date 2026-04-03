@@ -614,6 +614,7 @@
                         </ul>
                     </div>
                         <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="daily-practice">លំហាត់ប្រចាំថ្ងៃ</a>
+                        <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="daily-reading">ការអានប្រចាំថ្ងៃ</a>
                         <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="certificate">វិញ្ញាបនបត្រ</a>
                      <!-- Common Verbs Link -->
                         <a href="#" class="main-lesson-link block py-2 px-4 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md font-semibold" data-lesson="common-verbs">បញ្ជីកិរិយាសព្ទ</a>
@@ -2224,6 +2225,37 @@
                     <div id="daily-practice-container" class="space-y-4"></div>
                 </div>
 
+                <div id="daily-reading-content" class="lesson-content space-y-6">
+                    <button class="print-btn float-right p-2 rounded-md bg-gray-200 hover:bg-gray-300 no-print">🖨️ បោះពុម្ពការអាននេះ</button>
+                    <div class="daily-practice-header">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">📘 ការអានប្រចាំថ្ងៃ</h2>
+                            <p class="text-slate-600 mt-2">អត្ថបទអានខ្លីមួយសម្រាប់ថ្ងៃនេះ ដែលប្តូរ topic និង content ថ្មីរៀងរាល់ថ្ងៃ ដើម្បីជួយអានយល់ និងបង្កើនវាក្យសព្ទ។</p>
+                        </div>
+                        <span id="daily-reading-pill" class="daily-practice-pill">អត្ថបទថ្មីសម្រាប់ថ្ងៃនេះ</span>
+                    </div>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <h4>របៀបប្រើ</h4>
+                            <p>អានអត្ថបទឱ្យចប់ សង្កេតវាក្យសព្ទថ្មីៗ ហើយឆ្លើយសំណួរយល់ដឹងនៅខាងក្រោម។</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>គោលដៅប្រចាំថ្ងៃ</h4>
+                            <p>ព្យាយាមអានមួយអត្ថបទក្នុងមួយថ្ងៃ និងធ្វើឱ្យបានយ៉ាងហោចណាស់ 70% ក្នុងសំណួរខាងក្រោម។</p>
+                        </div>
+                    </div>
+                    <div class="final-test-card bg-gradient-to-br from-emerald-50 to-teal-50">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                            <div>
+                                <h4 id="daily-reading-topic" class="text-emerald-800">ប្រធានបទថ្ងៃនេះ</h4>
+                                <p class="text-slate-600 mt-2">អត្ថបទនេះត្រូវបានជ្រើសដោយស្វ័យប្រវត្តិសម្រាប់ថ្ងៃនេះ។</p>
+                            </div>
+                            <span id="daily-reading-date" class="level-pill open">Today</span>
+                        </div>
+                    </div>
+                    <div id="daily-reading-container" class="space-y-4"></div>
+                </div>
+
                 <div id="certificate-content" class="lesson-content space-y-6">
                     <button class="print-btn float-right p-2 rounded-md bg-gray-200 hover:bg-gray-300 no-print">🖨️ បោះពុម្ពវិញ្ញាបនបត្រ</button>
                     <h2 class="text-2xl font-bold text-gray-800">🏅 វិញ្ញាបនបត្រ និងស្លាកសមិទ្ធផល</h2>
@@ -2294,6 +2326,10 @@
             const openCertificateBtn = document.getElementById('open-certificate-btn');
             const dailyPracticeContainer = document.getElementById('daily-practice-container');
             const dailyPracticePill = document.getElementById('daily-practice-pill');
+            const dailyReadingContainer = document.getElementById('daily-reading-container');
+            const dailyReadingPill = document.getElementById('daily-reading-pill');
+            const dailyReadingTopic = document.getElementById('daily-reading-topic');
+            const dailyReadingDate = document.getElementById('daily-reading-date');
             const certificateSummary = document.getElementById('certificate-summary');
             const certificateBadge = document.getElementById('certificate-badge');
             const certificateBadgeList = document.getElementById('certificate-badge-list');
@@ -3055,6 +3091,169 @@
                 { prompt: "Which word is an adverb?", correct: "c", lessonId: "adverb", explanation: "carefully ពិពណ៌នារបៀបធ្វើសកម្មភាព ដូច្នេះវាជា adverb។", options: [{ value: "a", label: "happy" }, { value: "b", label: "table" }, { value: "c", label: "carefully" }] }
             ];
 
+            const dailyReadingArticles = [
+                {
+                    topic: "Healthy Routine",
+                    title: "A Student's Morning Plan",
+                    level: "Easy",
+                    passage: [
+                        "Mina is a secondary school student. She wakes up at 5:30 every morning and drinks a glass of water before she checks her phone. After that, she reviews five new English words and reads one short paragraph from her grammar notebook.",
+                        "Because she prepares her bag at night, her morning feels calm. She arrives at school on time and listens better in class. Mina believes that small habits are more helpful than big plans that do not last."
+                    ],
+                    vocabulary: [
+                        { word: "routine", meaning: "ទម្លាប់ដែលធ្វើជាប្រចាំ" },
+                        { word: "review", meaning: "រំលឹក ឬមើលឡើងវិញ" },
+                        { word: "calm", meaning: "ស្ងប់ស្ងាត់ មិនរញ៉េរញ៉ៃ" },
+                        { word: "habit", meaning: "ទម្លាប់" }
+                    ],
+                    questions: [
+                        { prompt: "Why does Mina's morning feel calm?", correct: "b", explanation: "អត្ថបទប្រាប់ថា នាងរៀបកាបូបតាំងពីយប់មុន។", options: [{ value: "a", label: "Because she wakes up late." }, { value: "b", label: "Because she prepares her bag at night." }, { value: "c", label: "Because she skips school." }] },
+                        { prompt: "What does Mina review in the morning?", correct: "a", explanation: "នាង review five new English words មុនទៅសាលា។", options: [{ value: "a", label: "Five new English words" }, { value: "b", label: "A science lesson" }, { value: "c", label: "A long storybook" }] },
+                        { prompt: "What is the main idea of the passage?", correct: "c", explanation: "អត្ថបទចង់បង្ហាញថាទម្លាប់តូចៗជួយឱ្យថ្ងៃចាប់ផ្តើមល្អ។", options: [{ value: "a", label: "Phones are necessary every morning." }, { value: "b", label: "Students should sleep less." }, { value: "c", label: "Small good habits can improve study life." }] }
+                    ]
+                },
+                {
+                    topic: "Reading Corner",
+                    title: "The School Library After Class",
+                    level: "Easy",
+                    passage: [
+                        "Every afternoon, a small group of students meets in the school library for thirty minutes. They do not read the same book. Instead, each student chooses a short text and shares two useful ideas with the group.",
+                        "Their teacher says this method works well because students stay curious. One student may read about animals, while another may read about technology or health. In this way, everyone learns new words and new information at the same time."
+                    ],
+                    vocabulary: [
+                        { word: "choose", meaning: "ជ្រើសរើស" },
+                        { word: "share", meaning: "ចែករំលែក" },
+                        { word: "curious", meaning: "ចង់ដឹងចង់ឮ" },
+                        { word: "method", meaning: "វិធីសាស្ត្រ" }
+                    ],
+                    questions: [
+                        { prompt: "How long do the students meet in the library?", correct: "a", explanation: "អត្ថបទបាននិយាយថា for thirty minutes។", options: [{ value: "a", label: "Thirty minutes" }, { value: "b", label: "One hour" }, { value: "c", label: "Two hours" }] },
+                        { prompt: "Why does the teacher like this reading method?", correct: "c", explanation: "Teacher says students stay curious។", options: [{ value: "a", label: "Because everyone reads the same page" }, { value: "b", label: "Because there is no homework" }, { value: "c", label: "Because students stay curious" }] },
+                        { prompt: "What happens when students read different topics?", correct: "b", explanation: "ពួកគេរៀនទាំងពាក្យថ្មី និងព័ត៌មានថ្មី។", options: [{ value: "a", label: "They become confused and stop reading" }, { value: "b", label: "They learn new words and information" }, { value: "c", label: "They only talk about one book" }] }
+                    ]
+                },
+                {
+                    topic: "Healthy Food",
+                    title: "Why Breakfast Matters",
+                    level: "Easy",
+                    passage: [
+                        "Some students go to class without breakfast because they are in a hurry. However, teachers often notice that these students become tired before noon and find it harder to focus on lessons.",
+                        "A simple breakfast does not need to be expensive. Rice, fruit, bread, or eggs can give the body energy for the morning. When students eat before school, they often feel more active and ready to learn."
+                    ],
+                    vocabulary: [
+                        { word: "focus", meaning: "ផ្តោតអារម្មណ៍" },
+                        { word: "expensive", meaning: "ថ្លៃ" },
+                        { word: "energy", meaning: "ថាមពល" },
+                        { word: "active", meaning: "សកម្ម" }
+                    ],
+                    questions: [
+                        { prompt: "What problem do some students have before noon?", correct: "b", explanation: "អត្ថបទនិយាយថាពួកគេ become tired before noon។", options: [{ value: "a", label: "They become hungry at night" }, { value: "b", label: "They become tired before noon" }, { value: "c", label: "They forget where the school is" }] },
+                        { prompt: "Which food is mentioned in the passage?", correct: "a", explanation: "Rice, fruit, bread, or eggs are mentioned clearly.", options: [{ value: "a", label: "Eggs" }, { value: "b", label: "Pizza" }, { value: "c", label: "Ice cream" }] },
+                        { prompt: "What is the writer's message?", correct: "c", explanation: "អត្ថបទលើកទឹកចិត្តឱ្យញ៉ាំអាហារពេលព្រឹកដើម្បីមានថាមពលសិក្សា។", options: [{ value: "a", label: "Breakfast should always be expensive" }, { value: "b", label: "Students should sleep in class" }, { value: "c", label: "Breakfast helps students study better" }] }
+                    ]
+                },
+                {
+                    topic: "Environment",
+                    title: "A Cleaner Classroom",
+                    level: "Easy",
+                    passage: [
+                        "Last month, one class in a small town decided to reduce waste in their classroom. Instead of using many plastic cups, students started to bring reusable bottles. They also placed two boxes in the room: one for paper and one for bottles.",
+                        "At first, only a few students remembered the new rule. After two weeks, however, the classroom looked much cleaner. The students felt proud because their small action created a visible result."
+                    ],
+                    vocabulary: [
+                        { word: "reduce", meaning: "កាត់បន្ថយ" },
+                        { word: "reusable", meaning: "អាចប្រើឡើងវិញបាន" },
+                        { word: "rule", meaning: "ច្បាប់" },
+                        { word: "visible", meaning: "ដែលមើលឃើញច្បាស់" }
+                    ],
+                    questions: [
+                        { prompt: "What did the students bring instead of plastic cups?", correct: "c", explanation: "They brought reusable bottles.", options: [{ value: "a", label: "Metal plates" }, { value: "b", label: "Lunch boxes" }, { value: "c", label: "Reusable bottles" }] },
+                        { prompt: "How did the classroom look after two weeks?", correct: "a", explanation: "After two weeks, the classroom looked much cleaner.", options: [{ value: "a", label: "Much cleaner" }, { value: "b", label: "More crowded" }, { value: "c", label: "Very dark" }] },
+                        { prompt: "What lesson does the passage teach?", correct: "b", explanation: "Small actions can create clear results over time.", options: [{ value: "a", label: "Rules never work in classrooms" }, { value: "b", label: "Small actions can improve the environment" }, { value: "c", label: "Students should stop bringing water" }] }
+                    ]
+                },
+                {
+                    topic: "Technology Use",
+                    title: "Learning Without Distraction",
+                    level: "Medium",
+                    passage: [
+                        "A university student named Dara once tried to study while answering messages every few minutes. Although he spent three hours at his desk, he finished very little work. He later realized that the problem was not time but attention.",
+                        "Now Dara keeps his phone in another room for twenty-five minutes at a time. During that period, he reads, writes, or reviews notes without interruption. Then he takes a short break before starting again. This simple change has made his study sessions more productive."
+                    ],
+                    vocabulary: [
+                        { word: "distraction", meaning: "អ្វីដែលរំខានការផ្តោត" },
+                        { word: "attention", meaning: "ការផ្តោតអារម្មណ៍" },
+                        { word: "interruption", meaning: "ការរំខានឱ្យផ្អាក" },
+                        { word: "productive", meaning: "ដែលមានប្រសិទ្ធភាពលទ្ធផលល្អ" }
+                    ],
+                    questions: [
+                        { prompt: "Why did Dara finish very little work at first?", correct: "b", explanation: "He kept answering messages and lost attention.", options: [{ value: "a", label: "He studied for only ten minutes" }, { value: "b", label: "He was distracted by messages" }, { value: "c", label: "He had no notes" }] },
+                        { prompt: "What does Dara do now for twenty-five minutes?", correct: "c", explanation: "He studies without interruption while the phone is away.", options: [{ value: "a", label: "He calls his friends" }, { value: "b", label: "He watches videos" }, { value: "c", label: "He studies without his phone nearby" }] },
+                        { prompt: "What is the best title for this passage?", correct: "a", explanation: "The passage is about reducing distraction during study time.", options: [{ value: "a", label: "Learning Without Distraction" }, { value: "b", label: "How to Buy a New Phone" }, { value: "c", label: "Three Hours of Free Time" }] }
+                    ]
+                },
+                {
+                    topic: "Community",
+                    title: "A Weekend Garden Project",
+                    level: "Medium",
+                    passage: [
+                        "Several families in one neighborhood started a small garden on an empty piece of land. On Saturday mornings, adults prepare the soil while children carry water and remove dry leaves. Each family takes care of a different part of the garden.",
+                        "The project does more than produce vegetables. It also creates conversation between neighbors who were once too busy to speak to each other. Because of the garden, people now share tools, advice, and sometimes even food."
+                    ],
+                    vocabulary: [
+                        { word: "soil", meaning: "ដីសម្រាប់ដាំដំណាំ" },
+                        { word: "neighborhood", meaning: "សហគមន៍ឬតំបន់ជុំវិញ" },
+                        { word: "advice", meaning: "ដំបូន្មាន" },
+                        { word: "produce", meaning: "បង្កើត ឬផលិត" }
+                    ],
+                    questions: [
+                        { prompt: "What do children do in the garden project?", correct: "a", explanation: "They carry water and remove dry leaves.", options: [{ value: "a", label: "They carry water and remove leaves" }, { value: "b", label: "They sell vegetables in the market" }, { value: "c", label: "They build a classroom" }] },
+                        { prompt: "Besides vegetables, what else does the project create?", correct: "c", explanation: "It creates conversation between neighbors.", options: [{ value: "a", label: "Traffic problems" }, { value: "b", label: "Homework" }, { value: "c", label: "Conversation between neighbors" }] },
+                        { prompt: "What is the writer's main point?", correct: "b", explanation: "The garden helps both food production and community relationships.", options: [{ value: "a", label: "Gardening is only for adults" }, { value: "b", label: "A garden can strengthen a community" }, { value: "c", label: "Vegetables grow only on weekends" }] }
+                    ]
+                },
+                {
+                    topic: "Study Skills",
+                    title: "Writing Down Questions",
+                    level: "Medium",
+                    passage: [
+                        "Some learners feel embarrassed when they do not understand a lesson, so they stay quiet. A teacher at a language center noticed this problem and asked students to keep a small question notebook. Whenever they felt confused, they wrote a question instead of ignoring it.",
+                        "At the end of class, the teacher collected the most common questions and answered them for everyone. Over time, students became more confident because they saw that confusion was a normal part of learning, not a sign of failure."
+                    ],
+                    vocabulary: [
+                        { word: "embarrassed", meaning: "អៀន ឬខ្មាស" },
+                        { word: "confused", meaning: "ច្របូកច្របល់ មិនយល់" },
+                        { word: "collect", meaning: "ប្រមូល" },
+                        { word: "confidence", meaning: "ភាពជឿជាក់លើខ្លួនឯង" }
+                    ],
+                    questions: [
+                        { prompt: "Why do some learners stay quiet?", correct: "b", explanation: "They feel embarrassed when they do not understand.", options: [{ value: "a", label: "They are always tired" }, { value: "b", label: "They feel embarrassed" }, { value: "c", label: "They already know everything" }] },
+                        { prompt: "What did the teacher ask students to keep?", correct: "a", explanation: "Students kept a small question notebook.", options: [{ value: "a", label: "A small question notebook" }, { value: "b", label: "A travel bag" }, { value: "c", label: "A dictionary only" }] },
+                        { prompt: "What changed over time?", correct: "c", explanation: "Students became more confident.", options: [{ value: "a", label: "Students stopped attending class" }, { value: "b", label: "The teacher stopped answering questions" }, { value: "c", label: "Students became more confident" }] }
+                    ]
+                },
+                {
+                    topic: "Daily Life",
+                    title: "A Short Walk After Dinner",
+                    level: "Easy",
+                    passage: [
+                        "Mr. Vann works in an office and spends many hours sitting each day. Recently, he started taking a fifteen-minute walk after dinner with his wife. They do not walk fast, but they go every evening unless it rains heavily.",
+                        "After a few weeks, Mr. Vann noticed two changes. He slept better at night, and he felt less stressed after work. The walk was simple, free, and easy to continue, so it became part of his routine."
+                    ],
+                    vocabulary: [
+                        { word: "stress", meaning: "សម្ពាធ ឬភាពតានតឹង" },
+                        { word: "routine", meaning: "ទម្លាប់ប្រចាំថ្ងៃ" },
+                        { word: "continue", meaning: "បន្ត" },
+                        { word: "notice", meaning: "សង្កេតឃើញ" }
+                    ],
+                    questions: [
+                        { prompt: "How long does Mr. Vann walk after dinner?", correct: "a", explanation: "He takes a fifteen-minute walk.", options: [{ value: "a", label: "Fifteen minutes" }, { value: "b", label: "Forty minutes" }, { value: "c", label: "Two hours" }] },
+                        { prompt: "What happened after a few weeks?", correct: "b", explanation: "He slept better and felt less stressed.", options: [{ value: "a", label: "He stopped walking" }, { value: "b", label: "He slept better and felt less stressed" }, { value: "c", label: "He changed jobs" }] },
+                        { prompt: "Why did the walk become part of his routine?", correct: "c", explanation: "It was simple, free, and easy to continue.", options: [{ value: "a", label: "Because it was difficult" }, { value: "b", label: "Because the office required it" }, { value: "c", label: "Because it was simple and easy to continue" }] }
+                    ]
+                }
+            ];
+
             function normalizeAnswer(text) {
                 return text.toLowerCase().replace(/\s+/g, ' ').trim().replace(/[.?!]$/, '');
             }
@@ -3075,7 +3274,8 @@
                     practiceChecks: {},
                     practiceScores: {},
                     visitedLessons: [],
-                    dailyPracticeScores: {}
+                    dailyPracticeScores: {},
+                    dailyReadingScores: {}
                 };
             }
 
@@ -3086,7 +3286,8 @@
                     practiceChecks: saved?.practiceChecks || {},
                     practiceScores: saved?.practiceScores || {},
                     visitedLessons: Array.isArray(saved?.visitedLessons) ? saved.visitedLessons : [],
-                    dailyPracticeScores: saved?.dailyPracticeScores || {}
+                    dailyPracticeScores: saved?.dailyPracticeScores || {},
+                    dailyReadingScores: saved?.dailyReadingScores || {}
                 };
             }
 
@@ -3300,6 +3501,25 @@
                     }));
             }
 
+            function formatReadableDate(dateKey) {
+                try {
+                    return new Date(`${dateKey}T00:00:00`).toLocaleDateString('en-GB', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                } catch (error) {
+                    return dateKey;
+                }
+            }
+
+            function getDailyReadingArticle() {
+                const dateKey = getTodayKey();
+                const index = hashText(`${dateKey}-daily-reading`) % dailyReadingArticles.length;
+                return dailyReadingArticles[index];
+            }
+
             function bindWeakTopicButtons() {
                 document.querySelectorAll('[data-review-lesson]').forEach(button => {
                     button.addEventListener('click', function() {
@@ -3403,6 +3623,7 @@
                         <p><strong>ឈ្មោះអ្នកប្រើ:</strong> ${profile?.name || 'អ្នកប្រើ'}</p>
                         <p><strong>Final Test:</strong> ${finalScoreText}</p>
                         <p><strong>ចំនួនថ្ងៃដែលបានធ្វើលំហាត់ប្រចាំថ្ងៃ:</strong> ${Object.keys(progressState.dailyPracticeScores || {}).length}</p>
+                        <p><strong>ចំនួនថ្ងៃដែលបានធ្វើការអានប្រចាំថ្ងៃ:</strong> ${Object.keys(progressState.dailyReadingScores || {}).length}</p>
                         <p>${badgeData.certificateReady ? 'អ្នកបានបំពេញលក្ខខណ្ឌវិញ្ញាបនបត្រហើយ។ អាចបោះពុម្ព ឬរក្សាទុកបាន។' : 'សូមបន្តធ្វើ Final Test ឱ្យបាន 70% ឡើងទៅ ដើម្បីទទួលវិញ្ញាបនបត្រ។'}</p>
                     `;
                 }
@@ -3492,6 +3713,109 @@
                 }
             }
 
+            function renderDailyReadingLesson() {
+                if (!dailyReadingContainer) return;
+                const todayKey = getTodayKey();
+                const previousScore = progressState.dailyReadingScores?.[todayKey];
+                const article = getDailyReadingArticle();
+
+                if (dailyReadingPill) {
+                    dailyReadingPill.textContent = typeof previousScore === 'number'
+                        ? `ថ្ងៃនេះបាន ${previousScore}%`
+                        : 'អត្ថបទថ្មីសម្រាប់ថ្ងៃនេះ';
+                }
+                if (dailyReadingTopic) {
+                    dailyReadingTopic.textContent = `${article.topic} • ${article.title}`;
+                }
+                if (dailyReadingDate) {
+                    dailyReadingDate.textContent = formatReadableDate(todayKey);
+                }
+
+                dailyReadingContainer.innerHTML = `
+                    <div class="final-test-card bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                            <div>
+                                <p class="text-sm uppercase tracking-[0.2em] text-emerald-700">${article.topic}</p>
+                                <h4 class="text-emerald-900 mt-1">${article.title}</h4>
+                            </div>
+                            <span class="level-pill open">${article.level}</span>
+                        </div>
+                        <div class="space-y-4 mt-4 text-slate-700 leading-7">
+                            ${article.passage.map(paragraph => `<p>${paragraph}</p>`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <h3>វាក្យសព្ទសម្រាប់ថ្ងៃនេះ</h3>
+                        <div class="summary-grid">
+                            ${article.vocabulary.map(item => `
+                                <div class="summary-card">
+                                    <h4>${item.word}</h4>
+                                    <p>${item.meaning}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="mini-tip"><strong>គន្លឹះអាន:</strong> អានម្តងទីមួយដើម្បីយល់គំនិតសរុប ហើយអានម្តងទីពីរដើម្បីសង្កេតពាក្យសំខាន់ និងព័ត៌មានលម្អិត។</div>
+                    <div id="quiz-daily-reading" class="space-y-4" data-lesson="daily-reading">
+                        ${article.questions.map((question, index) => createExtraQuizQuestion({
+                            ...question,
+                            name: `daily-reading-${todayKey}-${index + 1}`,
+                            prompt: `${index + 1}. ${question.prompt.replace(/^\d+\.\s*/, '')}`
+                        }, 'daily-reading')).join('')}
+                    </div>
+                    <button id="submit-daily-reading-btn" class="bg-emerald-600 text-white py-2 px-6 rounded-lg hover:bg-emerald-700 no-print">បញ្ជូនការអានប្រចាំថ្ងៃ</button>
+                    <div id="daily-reading-result" class="quiz-result mt-2 font-bold text-lg">${typeof previousScore === 'number' ? `លទ្ធផលថ្ងៃនេះ: ${previousScore}%` : ''}</div>
+                `;
+
+                const submitBtn = document.getElementById('submit-daily-reading-btn');
+                if (submitBtn) {
+                    submitBtn.addEventListener('click', function() {
+                        const quizContainer = document.getElementById('quiz-daily-reading');
+                        if (!quizContainer) return;
+                        const quizQuestions = quizContainer.querySelectorAll('.quiz-question');
+                        let score = 0;
+
+                        quizQuestions.forEach(question => {
+                            const correctAnswer = question.dataset.correct;
+                            const selectedAnswer = question.querySelector('input[type="radio"]:checked');
+                            const explanationBox = question.querySelector('.explanation-box');
+                            const correctOptionLabel = question.querySelector(`input[value="${correctAnswer}"]`)?.nextElementSibling?.textContent.trim() || '';
+
+                            question.classList.remove('bg-green-100', 'border-green-400', 'bg-red-100', 'border-red-400');
+                            explanationBox?.classList.remove('visible');
+
+                            if (selectedAnswer && selectedAnswer.value === correctAnswer) {
+                                score += 1;
+                                question.classList.add('bg-green-100', 'border-green-400');
+                            } else {
+                                question.classList.add('bg-red-100', 'border-red-400');
+                            }
+
+                            if (explanationBox) {
+                                explanationBox.textContent = buildQuestionExplanation(question, correctOptionLabel);
+                                explanationBox.classList.add('visible');
+                            }
+                        });
+
+                        const percentage = Math.round((score / quizQuestions.length) * 100);
+                        progressState.dailyReadingScores = progressState.dailyReadingScores || {};
+                        progressState.dailyReadingScores[todayKey] = percentage;
+                        saveProgress();
+                        updateProgressUI();
+                        logProfileActivity(`បានធ្វើ Daily Reading ថ្ងៃ ${todayKey} បាន ${percentage}%`);
+                        if (dailyReadingPill) {
+                            dailyReadingPill.textContent = `ថ្ងៃនេះបាន ${percentage}%`;
+                        }
+
+                        const result = document.getElementById('daily-reading-result');
+                        if (result) {
+                            result.textContent = `អ្នកទទួលបាន ${score}/${quizQuestions.length} ពិន្ទុ (${percentage}%)`;
+                            result.style.color = percentage >= PASS_THRESHOLD ? 'green' : 'red';
+                        }
+                    });
+                }
+            }
+
             function filterLessonNavigation(query) {
                 const normalized = (query || '').trim().toLowerCase();
                 const accordionSections = Array.from(document.querySelectorAll('#lesson-nav > div'));
@@ -3569,6 +3893,7 @@
                 renderFinalTest();
                 bindLevelTestControls();
                 renderDailyPracticeLesson();
+                renderDailyReadingLesson();
                 showLesson('welcome');
                 setProfileStatus(`បាន import ${newProfiles.length} profile រួចហើយ។`, '#15803d');
             }
@@ -3592,6 +3917,7 @@
                 renderFinalTest();
                 bindLevelTestControls();
                 renderDailyPracticeLesson();
+                renderDailyReadingLesson();
                 showLesson('welcome');
                 setProfileStatus(`បាន reset progress របស់ ${profile.name}`, '#c2410c');
             }
@@ -3607,6 +3933,7 @@
                 renderFinalTest();
                 bindLevelTestControls();
                 renderDailyPracticeLesson();
+                renderDailyReadingLesson();
                 showLesson('welcome');
                 setProfileStatus(`បានប្តូរទៅអ្នកប្រើ ${profile.name}`, '#2563eb');
             }
@@ -3634,6 +3961,7 @@
                 renderFinalTest();
                 bindLevelTestControls();
                 renderDailyPracticeLesson();
+                renderDailyReadingLesson();
                 showLesson('welcome');
 
                 if (profileNameInput) {
@@ -4334,6 +4662,7 @@
             populateVerbTable();
             renderLessonEnhancements();
             renderDailyPracticeLesson();
+            renderDailyReadingLesson();
             renderFinalTest();
             bindLevelTestControls();
             prepareQuizQuestions();
